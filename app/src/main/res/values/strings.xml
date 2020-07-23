@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Berita Ku</string>
+
+    <string name="btn_muat_ulang">Muat Ulang</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_gallery">Gallery</string>
+    <string name="btn_read_more">Baca Selengkapnya..</string>
+
+    <string name="label_select_image_from">Select Image from</string>
+    <string name="label_business">Bisnis</string>
+    <string name="label_tech">Teknologi</string>
+    <string name="label_sport">Olahraga</string>
+
+    <string name="text_todo">TODO</string>
+
+    <string name="menu_open_in_browser">Buka di browser</string>
+
+    <string name="error_default">Terjadi kesalahan</string>
+
+    <string name="title_news">feature-news</string>
+</resources>

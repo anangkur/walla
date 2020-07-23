@@ -1,0 +1,203 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- end of Base application theme. -->
+
+    <!--style for linear-->
+    <style name="LinearDefault">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="LinearVerticalDefault" parent="LinearDefault">
+        <item name="android:orientation">vertical</item>>
+    </style>
+
+    <style name="LinearVerticalWrap" parent="LinearVerticalDefault">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="LinearHorizontalDefault" parent="LinearDefault">
+        <item name="android:orientation">horizontal</item>>
+    </style>
+
+    <style name="LinearHorizontalWrap" parent="LinearHorizontalDefault">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--end of style for linear-->
+
+    <!--style for relative-->
+    <style name="RelativeDefault">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="RelativeWrapAll" parent="RelativeDefault">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--end of style for relative-->
+
+    <!--style for constraint-->
+    <style name="ConstraintDefault">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="ConstraintWrapHeight" parent="ConstraintDefault">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--end of style for constraint-->
+
+    <!--style for coordinator-->
+    <!--end of style for coordinator-->
+
+    <!--style for appbar-->
+    <!--end of style for appbar-->
+
+    <!--style for collapsing toolbar-->
+    <!--end of style for collapsing toolbar-->
+
+    <!--style for recycler view-->
+    <style name="RecyclerDefault">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="RecyclerWrapHeight" parent="RecyclerDefault">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--end of style for recycler view-->
+
+    <!--style for base text-->
+    <style name="TextNormal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextBig">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextExtraBig">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextSuperExtraBig">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <!--end of style for base text-->
+
+    <!--style for image view-->
+    <style name="ImageViewDefault">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ImageViewError" parent="ImageViewDefault">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
+    </style>
+
+    <style name="ImageViewHeightRatio" parent="ImageViewDefault">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="ImageViewAllRatio" parent="ImageViewDefault">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="ImageViewWrapAll" parent="ImageViewDefault">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ImageView28" parent="ImageViewDefault">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+    </style>
+    <!--end of style for image view-->
+
+    <!--style for text input layout-->
+    <!--end of style for text input layout-->
+
+    <!--style for edit text-->
+    <!--end of style for edit text-->
+
+    <!--style for view-->
+    <style name="ViewLine">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+    <!--end of style for view-->
+
+    <!--style for frame-->
+    <!--end of style for frame-->
+
+    <!--style for nested scroll-->
+    <style name="NestedScrollDefault">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <!--end of style for nested scroll-->
+
+    <!--style for card-->
+    <style name="CardDefault">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">10dp</item>
+    </style>
+
+    <style name="CardWrapHeight" parent="CardDefault">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--end of style for nested scroll-->
+
+    <!--style for toolbar-->
+    <style name="ToolbarDefault">
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+    <!--end of style for toolbar-->
+
+    <!--style for fab-->
+    <!--end of style for fab-->
+
+    <!--style for search-->
+    <!--end of style for search-->
+
+    <!--style for view pager-->
+    <!--end of style for view pager-->
+
+    <!--style for tab layout-->
+    <!--end of style for tab layout-->
+
+    <!--style for swipe refresh-->
+    <!--end of style for swipe refresh-->
+
+    <!--style for frame-->
+    <!--end of style for frame-->
+
+    <!--style for bottom navigation-->
+    <!--end of style for bottom navigation-->
+
+    <!--style for button-->
+    <style name="ButtonDefault">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <!--end of style for button-->
+
+    <!--style for spinner-->
+    <!--end of style for spinner-->
+</resources>

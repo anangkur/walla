@@ -1,0 +1,8 @@
+rootProject.name='Wallpaper App'
+include ':app'
+include ':data'
+include ':local'
+include ':remote'
+include ':domain'
+include ':presentation'
+include ':features:news'

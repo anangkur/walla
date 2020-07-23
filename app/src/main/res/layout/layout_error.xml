@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/RelativeDefault">
+    <LinearLayout
+        style="@style/LinearVerticalWrap"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/iv_error"
+            style="@style/ImageViewError"
+            android:src="@drawable/ic_problem"
+            android:contentDescription="@string/text_todo" />
+        <TextView
+            android:id="@+id/tv_error"
+            style="@style/TextBig"
+            android:text="@string/app_name"
+            android:textColor="@color/black_40"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"/>
+        <com.anangkur.materialloadingbutton.MaterialLoadingButton
+            android:id="@+id/btn_error"
+            style="@style/ButtonDefault"
+            app:mlb_cornerRadius="100dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
