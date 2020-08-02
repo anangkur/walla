@@ -18,4 +18,5 @@
     <string name="error_default">Terjadi kesalahan</string>
 
     <string name="title_news">feature-news</string>
+    <string name="title_wallpaper">feature-wallpaper</string>
 </resources>
