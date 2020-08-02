@@ -27,7 +27,7 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, Nothing>(){
         val handler = Handler()
         handler.postDelayed({
             val intent = Intent()
-            intent.setClassName(BuildConfig.APPLICATION_ID, "com.anangkur.wallpaper.news.NewsActivity")
+            intent.setClassName(BuildConfig.APPLICATION_ID, "com.anangkur.wallpaper.wallpaper.HomeActivity")
             startActivity(intent)
             finish()
         }, 3000)
