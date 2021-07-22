@@ -26,10 +26,6 @@ android {
 }
 
 dependencies {
-    implementation(project(':presentation'))
-    implementation(project(':data'))
-    implementation(project(':local'))
-    implementation(project(':remote'))
     implementation(project(':domain'))
 
     implementation Deps.androidxRoom
@@ -46,4 +42,7 @@ dependencies {
     kapt Deps.glideCompiler
 
     implementation Deps.androidxNavDynamicFeature
+
+    implementation Deps.androidxLifeCycleExtension
+    implementation Deps.androidxLivedata
 }

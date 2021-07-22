@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation project(':app')
-    implementation(project(':presentation'))
 
     implementation Deps.androidxLifeCycleExtension
 
