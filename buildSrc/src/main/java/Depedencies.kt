@@ -7,6 +7,8 @@ object Config {
     val javaVersion = JavaVersion.VERSION_1_8
     val javaVersion_1_6 = JavaVersion.VERSION_1_6
     const val buildTools = "29.0.2"
+    const val versionCode = 100
+    const val versionName = "1.0.0"
 }
 
 object Versions {
