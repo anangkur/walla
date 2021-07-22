@@ -1,9 +1,7 @@
 package com.anangkur.wallpaper.splash
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import com.anangkur.wallpaper.BuildConfig
 import com.anangkur.wallpaper.base.BaseActivity
 import com.anangkur.wallpaper.databinding.ActivitySplashBinding
 
@@ -18,17 +16,5 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, Nothing>(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        openActivity()
     }
-
-    private fun openActivity(){
-        startActivity(
-            Intent().setClassName(
-                BuildConfig.APPLICATION_ID,
-                "com.anangkur.wallpaper.wallpaper.HomeActivity"
-            )
-        )
-    }
-
 }
