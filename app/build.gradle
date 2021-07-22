@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle'
 
 android {
     defaultConfig {
         applicationId "com.anangkur.wallpaper"
-        versionCode 100
-        versionName "1.0.0"
+        versionCode Config.versionCode
+        versionName Config.versionName
     }
 
     buildTypes {
@@ -21,29 +20,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    
-    dynamicFeatures = [":features:wallpaper"]
+    dynamicFeatures = [
+            ':features:home',
+            ':features:search',
+            ':features:saved'
+    ]
 }
 
 dependencies {
-    implementation(project(':presentation'))
     implementation(project(':data'))
-    implementation(project(':local'))
-    implementation(project(':remote'))
-    implementation(project(':domain'))
-
-    implementation Deps.androidxRoom
-    kapt Deps.androidxRoomCompiler
-
-    implementation Deps.androidxLifeCycleExtension
-
-    implementation Deps.androidxConstraintLayout
-
+    implementation Deps.googleMaterial
     implementation Deps.materialLoadingButton
-    implementation Deps.multilineCollapsingToolbar
-
+    implementation Deps.toolsKotlinJdk8
+    implementation Deps.androidxConstraintLayout
+    implementation Deps.androidxLifeCycleExtension
     implementation Deps.glide
     kapt Deps.glideCompiler
-
-    implementation Deps.androidxNavDynamicFeature
+    implementation Deps.androidxLifeCycleExtension
+    implementation Deps.androidxLivedata
 }

@@ -2,13 +2,13 @@ package com.anangkur.wallpaper.local
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.anangkur.wallpaper.data.repository.LocalDataStore
+import com.anangkur.wallpaper.data.repository.LocalRepository
 import com.anangkur.wallpaper.local.db.AppDatabase
 
 class LocalRepository(
     private val preferences: SharedPreferences,
     private val appDatabase: AppDatabase
-): LocalDataStore {
+): LocalRepository {
 
     companion object{
         private var INSTANCE: LocalRepository? = null

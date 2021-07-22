@@ -19,4 +19,7 @@
 
     <string name="title_news">feature-news</string>
     <string name="title_wallpaper">feature-wallpaper</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_saved">Saved</string>
 </resources>

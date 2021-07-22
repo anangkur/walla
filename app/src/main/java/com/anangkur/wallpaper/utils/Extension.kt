@@ -23,8 +23,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anangkur.wallpaper.R
 import com.anangkur.wallpaper.injection.ViewModelFactory
-import com.anangkur.wallpaper.base.BaseSpinnerListener
-import com.anangkur.wallpaper.base.DialogImagePickerActionListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
@@ -204,7 +202,7 @@ fun SwipeRefreshLayout.stopLoading(){
     this.isRefreshing = false
 }
 
-fun Spinner.setupSpinner(data: ArrayList<String>, listener: BaseSpinnerListener){
+fun Spinner.setupSpinner(data: ArrayList<String>, onItemSelected: (Int) -> Unit){
     val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, data)
     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     this.apply {
@@ -212,13 +210,13 @@ fun Spinner.setupSpinner(data: ArrayList<String>, listener: BaseSpinnerListener)
         onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                listener.onItemSelected(parent, view, position, id)
+                onItemSelected(position)
             }
         }
     }
 }
 
-fun Context.showDialogImagePicker(listener: DialogImagePickerActionListener) {
+fun Context.showDialogImagePicker(onClickCamera: () -> Unit, onCLickGallery: () -> Unit) {
     val alertDialog = AlertDialog.Builder(this).create()
     val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_image_picker, null)
 
@@ -226,11 +224,11 @@ fun Context.showDialogImagePicker(listener: DialogImagePickerActionListener) {
         val btnCamera = findViewById<LinearLayout>(R.id.btn_camera)
         val btnGallery = findViewById<LinearLayout>(R.id.btn_gallery)
         btnCamera.setOnClickListener {
-            listener.onClickCamera()
+            onClickCamera()
             alertDialog.dismiss()
         }
         btnGallery.setOnClickListener {
-            listener.onClickGallery()
+            onCLickGallery()
             alertDialog.dismiss()
         }
     }

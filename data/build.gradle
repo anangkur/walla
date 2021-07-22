@@ -2,8 +2,5 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 dependencies {
-
-    implementation(project(':domain'))
-
-    implementation Deps.androidxLivedata
+    implementation Deps.toolsKotlinJdk8
 }
