@@ -1,8 +1,8 @@
 package com.anangkur.wallpaper.remote
 
-import com.anangkur.wallpaper.data.repository.RemoteDataStore
+import com.anangkur.wallpaper.data.repository.RemoteRepository
 
-class RemoteRepository: RemoteDataStore {
+class RemoteRepository: RemoteRepository {
 
     companion object{
         private var INSTANCE: RemoteRepository? = null

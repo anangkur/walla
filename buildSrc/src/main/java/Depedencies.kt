@@ -100,4 +100,5 @@ object Deps {
     // tools
     const val toolsGradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
     const val toolsKotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+    const val toolsKotlinJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlinVersion}"
 }
