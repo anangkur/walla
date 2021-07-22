@@ -1,4 +1,4 @@
-package com.anangkur.wallpaper.base
+package com.anangkur.wallpaper.model
 
 data class BaseResult<out T>(
     val status: Int,

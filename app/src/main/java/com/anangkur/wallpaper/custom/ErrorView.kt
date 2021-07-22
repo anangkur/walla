@@ -1,4 +1,4 @@
-package com.anangkur.wallpaper.base
+package com.anangkur.wallpaper.custom
 
 import android.content.Context
 import android.util.AttributeSet
@@ -13,7 +13,7 @@ import com.anangkur.wallpaper.utils.gone
 import com.anangkur.wallpaper.utils.visible
 import com.anangkur.materialloadingbutton.MaterialLoadingButton
 
-class BaseErrorView(context: Context, attrs: AttributeSet): RelativeLayout(context, attrs){
+class ErrorView(context: Context, attrs: AttributeSet): RelativeLayout(context, attrs){
 
     private var ivError: ImageView
     private var tvError: TextView
