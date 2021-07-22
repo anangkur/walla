@@ -2,19 +2,12 @@ package com.anangkur.wallpaper.remote
 
 import com.anangkur.wallpaper.data.model.ArticleEntity
 import com.anangkur.wallpaper.data.repository.ArticleRemote
-import com.anangkur.wallpaper.remote.mapper.ArticleMapper
 
-class RemoteRepository (
-    private val mapper: ArticleMapper,
-    private val service: ApiService
-): ArticleRemote {
+class RemoteRepository: ArticleRemote {
 
     companion object{
         private var INSTANCE: RemoteRepository? = null
-        fun getInstance() = INSTANCE ?: RemoteRepository(
-            ArticleMapper.getInstance(),
-            ApiService.getApiService
-        )
+        fun getInstance() = INSTANCE ?: RemoteRepository()
     }
 
     override suspend fun getTopHeadlinesNews(
@@ -24,18 +17,6 @@ class RemoteRepository (
         sources: String?,
         q: String?
     ): List<ArticleEntity> {
-        val response = service.getTopHeadlinesNews(
-            apiKey,
-            country,
-            category,
-            sources,
-            q
-        )
-        return if (response.status == "ok"){
-            val data = response.articleEntities.map { mapper.mapFromRemote(it) }
-            data
-        } else {
-            emptyList()
-        }
+        return emptyList()
     }
 }
