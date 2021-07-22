@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle'
 
@@ -21,26 +20,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dynamicFeatures = [
+            ':features:home',
+            ':features:search',
+            ':features:saved'
+    ]
 }
 
 dependencies {
     implementation(project(':data'))
-
-    implementation Deps.androidxRoom
-    kapt Deps.androidxRoomCompiler
-
-    implementation Deps.androidxLifeCycleExtension
-
-    implementation Deps.androidxConstraintLayout
-
+    implementation Deps.googleMaterial
     implementation Deps.materialLoadingButton
-    implementation Deps.multilineCollapsingToolbar
-
+    implementation Deps.toolsKotlinJdk8
+    implementation Deps.androidxConstraintLayout
+    implementation Deps.androidxLifeCycleExtension
     implementation Deps.glide
     kapt Deps.glideCompiler
-
-    implementation Deps.androidxNavDynamicFeature
-
     implementation Deps.androidxLifeCycleExtension
     implementation Deps.androidxLivedata
 }
