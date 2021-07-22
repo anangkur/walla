@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFEABF</color>
 
     <color name="blackText">#333333</color>
+    <color name="black_card">#1e1e1e</color>
     <color name="black_40">#66000000</color>
     <color name="gray">#E0E0E0</color>
     <color name="white">#FFFFFF</color>

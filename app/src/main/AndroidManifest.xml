@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.anangkur.wallpaper.splash.SplashActivity">
+        <activity android:name="com.anangkur.wallpaper.feature.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
