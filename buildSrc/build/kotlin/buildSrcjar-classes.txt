@@ -1,1 +1,0 @@
-/home/anangkur/Documents/android-project/Personal Project/wallpaper-app/buildSrc/build/classes/kotlin/main/Config.class:/home/anangkur/Documents/android-project/Personal Project/wallpaper-app/buildSrc/build/classes/kotlin/main/Deps.class:/home/anangkur/Documents/android-project/Personal Project/wallpaper-app/buildSrc/build/classes/kotlin/main/Versions.class

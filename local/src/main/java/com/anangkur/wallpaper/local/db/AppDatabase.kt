@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.anangkur.wallpaper.local.dao.AppDao
 import com.anangkur.wallpaper.local.Const
-import com.anangkur.wallpaper.local.model.ArticleCached
+import com.anangkur.wallpaper.local.model.DatabaseEntity
 
-@Database(entities = [ArticleCached::class], version = 2)
+@Database(entities = [DatabaseEntity::class], version = 3)
 abstract class AppDatabase: RoomDatabase(){
 
     abstract fun getDao(): AppDao
@@ -19,8 +19,11 @@ abstract class AppDatabase: RoomDatabase(){
             if (INSTANCE == null){
                 synchronized(this){
                     if (INSTANCE == null){
-                        INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, Const.DATABASE_NAME)
-                            .fallbackToDestructiveMigration()
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            AppDatabase::class.java,
+                            Const.DATABASE_NAME
+                        ).fallbackToDestructiveMigration()
                             .build()
                     }
                     return INSTANCE!!

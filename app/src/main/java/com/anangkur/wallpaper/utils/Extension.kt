@@ -35,10 +35,10 @@ import java.text.DecimalFormatSymbols
 import java.util.regex.Pattern
 
 fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, ViewModelFactory.getInstance(this)).get(viewModelClass)
+    ViewModelProviders.of(this, ViewModelFactory.getInstance()).get(viewModelClass)
 
 fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, ViewModelFactory.getInstance(requireContext())).get(viewModelClass)
+    ViewModelProviders.of(this, ViewModelFactory.getInstance()).get(viewModelClass)
 
 fun Activity.showSnackbarLong(message: String){
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()

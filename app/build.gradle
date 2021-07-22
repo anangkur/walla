@@ -22,7 +22,7 @@ android {
         }
     }
     
-    dynamicFeatures = [":features:news", ":features:wallpaper"]
+    dynamicFeatures = [":features:wallpaper"]
 }
 
 dependencies {
