@@ -1,22 +1,11 @@
 package com.anangkur.wallpaper.remote
 
-import com.anangkur.wallpaper.data.model.ArticleEntity
-import com.anangkur.wallpaper.data.repository.ArticleRemote
+import com.anangkur.wallpaper.data.repository.RemoteDataStore
 
-class RemoteRepository: ArticleRemote {
+class RemoteRepository: RemoteDataStore {
 
     companion object{
         private var INSTANCE: RemoteRepository? = null
         fun getInstance() = INSTANCE ?: RemoteRepository()
-    }
-
-    override suspend fun getTopHeadlinesNews(
-        apiKey: String?,
-        country: String?,
-        category: String?,
-        sources: String?,
-        q: String?
-    ): List<ArticleEntity> {
-        return emptyList()
     }
 }

@@ -2,14 +2,13 @@ package com.anangkur.wallpaper.local
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.anangkur.wallpaper.data.model.ArticleEntity
-import com.anangkur.wallpaper.data.repository.ArticleLocal
+import com.anangkur.wallpaper.data.repository.LocalDataStore
 import com.anangkur.wallpaper.local.db.AppDatabase
 
 class LocalRepository(
     private val preferences: SharedPreferences,
     private val appDatabase: AppDatabase
-): ArticleLocal {
+): LocalDataStore {
 
     companion object{
         private var INSTANCE: LocalRepository? = null
@@ -20,16 +19,6 @@ class LocalRepository(
     }
 
     private val expirationTime = (60 * 10 * 1000).toLong()
-
-    override suspend fun insertData(data: List<ArticleEntity>) {
-    }
-
-    override suspend fun deleteByCategory(category: String) {
-    }
-
-    override fun getAllDataByCategory(category: String): List<ArticleEntity> {
-        return emptyList()
-    }
 
     override fun isExpired(): Boolean {
         val currentTime = System.currentTimeMillis()
