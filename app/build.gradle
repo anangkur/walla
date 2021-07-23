@@ -23,7 +23,8 @@ android {
     dynamicFeatures = [
             ':features:home',
             ':features:search',
-            ':features:saved'
+            ':features:saved',
+            ':features:preview'
     ]
 }
 
