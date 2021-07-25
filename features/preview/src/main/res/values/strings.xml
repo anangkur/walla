@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_set">Set</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_fullscreen">Fullscreen</string>
+    <string name="btn_exit_fullscreen">Exit</string>
+    <string name="message_failed_set_wallpaper">Failed set wallpaper</string>
+    <string name="message_success_set_wallpaper">Success set wallpaper</string>
+</resources>

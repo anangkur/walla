@@ -45,6 +45,6 @@ class MainActivity: AppCompatActivity(){
     }
 
     private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container_view, fragment).commit()
     }
 }

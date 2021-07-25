@@ -13,6 +13,7 @@ import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
 import com.anangkur.wallpaper.features.home.model.Collection
 import com.anangkur.wallpaper.features.home.model.WallpaperUiModel
+import com.anangkur.wallpaper.utils.getPreviewDialog
 
 class HomeFragment : Fragment() {
 
@@ -47,7 +48,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSuggestionAdapter() {
-        suggestionAdapter = SuggestionAdapter()
+        suggestionAdapter = SuggestionAdapter(
+            onClick = {
+                getPreviewDialog(
+                    title = it.title,
+                    creator = it.creator,
+                    imageUrl = it.imageUrl
+                ).show(childFragmentManager, tag)
+            }
+        )
         binding.recyclerSuggestion.apply {
             adapter = suggestionAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -76,7 +85,14 @@ class HomeFragment : Fragment() {
     private fun setDataDummySuggestion() {
         val items = ArrayList<WallpaperUiModel>()
         for (i in 1..10) {
-            items.add(WallpaperUiModel(id = "", title = "", imageUrl = "https://picsum.photos/1080/1920"))
+            items.add(
+                WallpaperUiModel(
+                    id = "",
+                    title = "Creation shel",
+                    imageUrl = "https://picsum.photos/1080/1920",
+                    creator = "by Fallout legacy"
+                )
+            )
         }
         suggestionAdapter.setItems(items)
     }
@@ -85,7 +101,14 @@ class HomeFragment : Fragment() {
         val items = ArrayList<Collection>()
         val subItems = ArrayList<WallpaperUiModel>()
         for (i in 1..10) {
-            subItems.add(WallpaperUiModel(id = "", title = "", imageUrl = "https://picsum.photos/1080/1920"))
+            subItems.add(
+                WallpaperUiModel(
+                    id = "",
+                    title = "",
+                    imageUrl = "https://picsum.photos/1080/1920",
+                    creator = "by Fallout legacy"
+                )
+            )
         }
         for (i in 1..10) {
             items.add(
