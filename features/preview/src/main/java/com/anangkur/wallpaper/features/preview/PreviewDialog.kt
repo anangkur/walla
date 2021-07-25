@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
-import com.anangkur.wallpaper.utils.ARGS_CREATOR
-import com.anangkur.wallpaper.utils.ARGS_IMAGE_URL
-import com.anangkur.wallpaper.utils.ARGS_TITLE
-import com.anangkur.wallpaper.utils.setImageUrl
 import com.anangkur.wallpaper.R
+import com.anangkur.wallpaper.utils.*
 
 class PreviewDialog : DialogFragment() {
 
@@ -72,6 +69,8 @@ class PreviewDialog : DialogFragment() {
         binding.root.setOnClickListener { dialog?.hide() }
         binding.btnSet.setOnClickListener { Toast.makeText(requireContext(), "set", Toast.LENGTH_SHORT).show() }
         binding.btnSave.setOnClickListener { Toast.makeText(requireContext(), "save", Toast.LENGTH_SHORT).show() }
-        binding.btnFullscreen.setOnClickListener { Toast.makeText(requireContext(), "fullscreen", Toast.LENGTH_SHORT).show() }
+        binding.btnFullscreen.setOnClickListener {
+            requireContext().startPreviewActivity(title = title, creator = creator, imageUrl = imageUrl)
+        }
     }
 }

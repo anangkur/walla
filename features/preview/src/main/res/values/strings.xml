@@ -3,4 +3,5 @@
     <string name="btn_set">Set</string>
     <string name="btn_save">Save</string>
     <string name="btn_fullscreen">Fullscreen</string>
+    <string name="btn_exit_fullscreen">Exit</string>
 </resources>
