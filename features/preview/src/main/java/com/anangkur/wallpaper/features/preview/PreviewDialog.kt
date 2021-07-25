@@ -64,7 +64,7 @@ class PreviewDialog : DialogFragment() {
     private fun setDialogToTransparent() {
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            dialog.window?.setBackgroundDrawableResource(R.color.black_40)
+            dialog.window?.setBackgroundDrawableResource(R.color.black_60)
         }
     }
 
