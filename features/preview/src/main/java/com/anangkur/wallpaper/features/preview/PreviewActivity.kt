@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anangkur.wallpaper.features.preview.databinding.ActivityPreviewBinding
-import com.anangkur.wallpaper.utils.ARGS_CREATOR
-import com.anangkur.wallpaper.utils.ARGS_IMAGE_URL
-import com.anangkur.wallpaper.utils.ARGS_TITLE
-import com.anangkur.wallpaper.utils.setImageUrl
+import com.anangkur.wallpaper.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class PreviewActivity: AppCompatActivity() {
@@ -45,7 +42,7 @@ class PreviewActivity: AppCompatActivity() {
 
     private fun setAction() {
         binding.btnClose.setOnClickListener { onBackPressed() }
-        binding.btnSet.setOnClickListener { Toast.makeText(this, "set", Toast.LENGTH_SHORT).show() }
+        binding.btnSet.setOnClickListener { setWallpaper() }
         binding.btnSave.setOnClickListener { Toast.makeText(this, "save", Toast.LENGTH_SHORT).show() }
         binding.btnFullscreen.setOnClickListener { onBackPressed() }
     }
@@ -53,5 +50,22 @@ class PreviewActivity: AppCompatActivity() {
     private fun setBottomSheetExpand() {
         val bottomSheetBehaviour = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun setWallpaper() {
+        downloadBitmap(
+            onLoading = {
+                binding.flipperSet.displayedChild = 1
+            },
+            onFailed = {
+                binding.flipperSet.displayedChild = 0
+                showSnackbarShort(getString(R.string.message_failed_set_wallpaper))
+            },
+            onResourceReady = {
+                setWallpaperDevice(it)
+                showSnackbarShort(getString(R.string.message_success_set_wallpaper))
+            },
+            imageUrl = imageUrl
+        )
     }
 }

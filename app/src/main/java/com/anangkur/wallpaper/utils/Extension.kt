@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,8 @@ import com.anangkur.wallpaper.R
 import com.anangkur.wallpaper.injection.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import java.io.File
@@ -267,4 +271,29 @@ fun Context.copyToClipboard(text: String){
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText(Const.LABEL_CLIPBOARD, text)
     clipboard.setPrimaryClip(clip)
+}
+
+fun Context.downloadBitmap(
+    imageUrl: String,
+    onResourceReady: (Bitmap) -> Unit,
+    onLoading: () -> Unit,
+    onFailed: () -> Unit
+) {
+    Glide.with(this)
+        .asBitmap()
+        .load(imageUrl)
+        .into(object : CustomTarget<Bitmap>(){
+            override fun onLoadCleared(placeholder: Drawable?) {}
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                onResourceReady(resource)
+            }
+            override fun onStart() {
+                super.onStart()
+                onLoading()
+            }
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                onFailed()
+            }
+        })
 }

@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
-import com.anangkur.wallpaper.R
+import com.anangkur.wallpaper.R as APP_R
+import com.anangkur.wallpaper.features.preview.R as PREVIEW_R
 import com.anangkur.wallpaper.utils.*
 
 class PreviewDialog : DialogFragment() {
@@ -61,16 +62,34 @@ class PreviewDialog : DialogFragment() {
     private fun setDialogToTransparent() {
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            dialog.window?.setBackgroundDrawableResource(R.color.black_60)
+            dialog.window?.setBackgroundDrawableResource(APP_R.color.black_60)
         }
     }
 
     private fun setOnClickListener() {
         binding.root.setOnClickListener { dialog?.hide() }
-        binding.btnSet.setOnClickListener { Toast.makeText(requireContext(), "set", Toast.LENGTH_SHORT).show() }
+        binding.btnSet.setOnClickListener { setWallpaper() }
         binding.btnSave.setOnClickListener { Toast.makeText(requireContext(), "save", Toast.LENGTH_SHORT).show() }
         binding.btnFullscreen.setOnClickListener {
             requireContext().startPreviewActivity(title = title, creator = creator, imageUrl = imageUrl)
         }
+    }
+
+    private fun setWallpaper() {
+        requireContext().downloadBitmap(
+            onLoading = {
+                binding.flipperSet.displayedChild = 1
+            },
+            onFailed = {
+                binding.flipperSet.displayedChild = 0
+                requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_failed_set_wallpaper))
+            },
+            onResourceReady = {
+                requireContext().setWallpaperDevice(it)
+                dialog?.hide()
+                requireActivity().showSnackbarShort(getString(com.anangkur.wallpaper.features.preview.R.string.message_success_set_wallpaper))
+            },
+            imageUrl = imageUrl
+        )
     }
 }
