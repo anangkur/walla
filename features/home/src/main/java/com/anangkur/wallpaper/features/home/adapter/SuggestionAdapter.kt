@@ -7,13 +7,14 @@ import com.anangkur.wallpaper.features.home.databinding.ItemSuggestionBinding
 import com.anangkur.wallpaper.features.home.model.WallpaperUiModel
 import com.anangkur.wallpaper.utils.setImageUrl
 
-class SuggestionAdapter : RecyclerView.Adapter<SuggestionAdapter.ViewHolder>() {
+class SuggestionAdapter(private val onClick: (WallpaperUiModel) -> Unit) : RecyclerView.Adapter<SuggestionAdapter.ViewHolder>() {
 
     private val items = ArrayList<WallpaperUiModel>()
 
     inner class ViewHolder(private val binding: ItemSuggestionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: WallpaperUiModel) {
             binding.ivSuggestion.setImageUrl(item.imageUrl)
+            binding.root.setOnClickListener { onClick(item) }
         }
     }
 
