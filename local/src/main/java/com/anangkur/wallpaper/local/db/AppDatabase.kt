@@ -8,7 +8,7 @@ import com.anangkur.wallpaper.local.dao.AppDao
 import com.anangkur.wallpaper.local.Const
 import com.anangkur.wallpaper.local.model.DatabaseEntity
 
-@Database(entities = [DatabaseEntity::class], version = 3)
+@Database(entities = [DatabaseEntity::class], version = 4)
 abstract class AppDatabase: RoomDatabase(){
 
     abstract fun getDao(): AppDao
