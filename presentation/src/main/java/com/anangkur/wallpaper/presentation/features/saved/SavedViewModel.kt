@@ -22,7 +22,7 @@ class SavedViewModel(private val repository: Repository): ViewModel() {
     fun retrieveWallpaper() {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
-            repository.retrieveWallpapers().runCatching {
+            repository.retrieveSavedWallpaper().runCatching {
                 _loading.postValue(false)
                 _wallpapers.postValue(this)
             }.onFailure {
