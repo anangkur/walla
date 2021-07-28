@@ -63,8 +63,18 @@ class PreviewDialog : DialogFragment() {
             })
             success.observe(viewLifecycleOwner, Observer {
                 when (it) {
-                    Action.Delete -> requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_deleted))
-                    Action.Insert -> requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_saved))
+                    Action.Delete -> {
+                        isSaved = !isSaved
+                        setData()
+                        dialog?.hide()
+                        requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_deleted))
+                    }
+                    Action.Insert -> {
+                        isSaved = !isSaved
+                        setData()
+                        dialog?.hide()
+                        requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_saved))
+                    }
                 }
             })
         }

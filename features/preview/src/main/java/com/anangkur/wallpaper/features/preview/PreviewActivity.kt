@@ -52,8 +52,16 @@ class PreviewActivity: AppCompatActivity() {
             })
             success.observe(this@PreviewActivity, Observer {
                 when (it) {
-                    PreviewViewModel.Companion.Action.Delete -> showSnackbarShort(getString(R.string.message_wallpaper_deleted))
-                    PreviewViewModel.Companion.Action.Insert -> showSnackbarShort(getString(R.string.message_wallpaper_saved))
+                    PreviewViewModel.Companion.Action.Delete -> {
+                        isSaved = !isSaved
+                        setData()
+                        showSnackbarShort(getString(R.string.message_wallpaper_deleted))
+                    }
+                    PreviewViewModel.Companion.Action.Insert -> {
+                        isSaved = !isSaved
+                        setData()
+                        showSnackbarShort(getString(R.string.message_wallpaper_saved))
+                    }
                 }
             })
         }
