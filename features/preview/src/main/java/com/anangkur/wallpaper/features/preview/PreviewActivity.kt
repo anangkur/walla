@@ -1,9 +1,10 @@
 package com.anangkur.wallpaper.features.preview
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.preview.databinding.ActivityPreviewBinding
 import com.anangkur.wallpaper.presentation.*
 import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
@@ -70,12 +71,43 @@ class PreviewActivity: AppCompatActivity() {
         binding.ivPreview.setImageUrl(imageUrl)
         binding.tvTitle.text = title
         binding.tvCreator.text = creator
+        binding.ivSave.setImageDrawable(getIconSave(isSaved))
+        binding.tvSave.text = getTextSave(isSaved)
+    }
+
+    private fun getIconSave(isSaved: Boolean) = if (isSaved)
+        ContextCompat.getDrawable(this, R.drawable.ic_delete)
+    else
+        ContextCompat.getDrawable(this, R.drawable.ic_save)
+
+    private fun getTextSave(isSaved: Boolean) = if (isSaved) {
+        getString(R.string.btn_delete)
+    } else {
+        getString(R.string.btn_save)
+    }
+
+    private fun saveAction(wallpaper: Wallpaper) {
+        if (isSaved) {
+            previewViewModel.deleteWallpaper(wallpaper.id)
+        } else {
+            previewViewModel.insertWallpaper(wallpaper)
+        }
     }
 
     private fun setAction() {
         binding.btnClose.setOnClickListener { onBackPressed() }
         binding.btnSet.setOnClickListener { setWallpaper() }
-        binding.btnSave.setOnClickListener { Toast.makeText(this, "save", Toast.LENGTH_SHORT).show() }
+        binding.btnSave.setOnClickListener {
+            saveAction(
+                Wallpaper(
+                    id = id,
+                    title = title,
+                    imageUrl = imageUrl,
+                    creator = creator,
+                    isSaved = isSaved
+                )
+            )
+        }
         binding.btnFullscreen.setOnClickListener { onBackPressed() }
     }
 

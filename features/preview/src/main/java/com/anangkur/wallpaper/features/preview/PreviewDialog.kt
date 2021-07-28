@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.anangkur.wallpaper.data.model.Wallpaper
@@ -81,6 +82,19 @@ class PreviewDialog : DialogFragment() {
         binding.tvTitle.text = title
         binding.tvCreator.text = creator
         binding.ivPreview.setImageUrl(imageUrl)
+        binding.ivSave.setImageDrawable(getIconSave(isSaved))
+        binding.tvSave.text = getTextSave(isSaved)
+    }
+
+    private fun getIconSave(isSaved: Boolean) = if (isSaved)
+        ContextCompat.getDrawable(requireContext(), PREVIEW_R.drawable.ic_delete)
+    else
+        ContextCompat.getDrawable(requireContext(), PREVIEW_R.drawable.ic_save)
+
+    private fun getTextSave(isSaved: Boolean) = if (isSaved) {
+        getString(PREVIEW_R.string.btn_delete)
+    } else {
+        getString(PREVIEW_R.string.btn_save)
     }
 
     private fun setDialogToFullscreen() {
@@ -103,7 +117,7 @@ class PreviewDialog : DialogFragment() {
         binding.root.setOnClickListener { dialog?.hide() }
         binding.btnSet.setOnClickListener { setWallpaper() }
         binding.btnSave.setOnClickListener {
-            previewViewModel.insertWallpaper(
+            saveAction(
                 Wallpaper(
                     id = id,
                     title = title,
@@ -121,6 +135,14 @@ class PreviewDialog : DialogFragment() {
                 id = id,
                 isSaved = isSaved
             )
+        }
+    }
+
+    private fun saveAction(wallpaper: Wallpaper) {
+        if (isSaved) {
+            previewViewModel.deleteWallpaper(wallpaper.id)
+        } else {
+            previewViewModel.insertWallpaper(wallpaper)
         }
     }
 
