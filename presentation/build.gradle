@@ -5,4 +5,5 @@ dependencies {
     api(project(':data'))
     implementation Deps.androidxFragment
     implementation Deps.androidxLivedata
+    implementation Deps.androidxViewModel
 }
