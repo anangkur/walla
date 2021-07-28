@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
         suggestionAdapter = SuggestionAdapter(
             onClick = {
                 getPreviewDialog(
+                    id = it.id,
                     title = it.title,
                     creator = it.creator,
                     imageUrl = it.imageUrl

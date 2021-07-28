@@ -57,6 +57,7 @@ class SavedFragment : Fragment() {
     private fun setupRecyclerSaved() {
         savedAdapter = SavedAdapter {
             getPreviewDialog(
+                id = it.id,
                 title = it.title,
                 creator = it.creator,
                 imageUrl = it.imageUrl

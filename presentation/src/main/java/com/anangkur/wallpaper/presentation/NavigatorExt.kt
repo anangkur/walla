@@ -12,6 +12,7 @@ private const val SAVED_FRAGMENT = "com.anangkur.wallpaper.features.saved.SavedF
 private const val PREVIEW_DIALOG_FRAGMENT = "com.anangkur.wallpaper.features.preview.PreviewDialog"
 private const val PREVIEW_ACTIVITY = "com.anangkur.wallpaper.features.preview.PreviewActivity"
 
+const val ARGS_ID = "id"
 const val ARGS_TITLE = "title"
 const val ARGS_CREATOR = "creator"
 const val ARGS_IMAGE_URL = "imageUrl"
@@ -23,11 +24,13 @@ fun getHomeFragment() = getFragment(HOME_FRAGMENT)
 fun getSearchFragment() = getFragment(SEARCH_FRAGMENT)
 fun getSavedFragment() = getFragment(SAVED_FRAGMENT)
 fun getPreviewDialog(
+    id: String,
     title: String,
     creator: String,
     imageUrl: String
 ) = getDialogFragment(PREVIEW_DIALOG_FRAGMENT).apply {
     arguments = Bundle().apply {
+        putString(ARGS_ID, id)
         putString(ARGS_TITLE, title)
         putString(ARGS_CREATOR, creator)
         putString(ARGS_IMAGE_URL, imageUrl)
@@ -35,11 +38,13 @@ fun getPreviewDialog(
 }
 
 fun Context.startPreviewActivity(
+    id: String,
     title: String,
     creator: String,
     imageUrl: String
 ) {
     startActivity(Intent(this, Class.forName(PREVIEW_ACTIVITY)).apply {
+        putExtra(ARGS_ID, id)
         putExtra(ARGS_TITLE, title)
         putExtra(ARGS_CREATOR, creator)
         putExtra(ARGS_IMAGE_URL, imageUrl)
