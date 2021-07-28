@@ -34,15 +34,10 @@ class HomeFragment : Fragment() {
         setupSuggestionAdapter()
         setupFavCollectionAdapter()
         setupOtherCollectionAdapter()
-
-        setDataDummyCollection()
-        setDataDummySuggestion()
     }
 
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
-            setDataDummyCollection()
-            setDataDummySuggestion()
             binding.root.isRefreshing = false
         }
     }
@@ -82,50 +77,5 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
-    }
-
-    private fun setDataDummySuggestion() {
-        val items = ArrayList<Wallpaper>()
-        for (i in 1..10) {
-            items.add(
-                Wallpaper(
-                    id = "",
-                    title = "Creation shel",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy",
-                    isSaved = false
-                )
-            )
-        }
-        suggestionAdapter.setItems(items)
-    }
-
-    private fun setDataDummyCollection() {
-        val items = ArrayList<Collection>()
-        val subItems = ArrayList<Wallpaper>()
-        for (i in 1..10) {
-            subItems.add(
-                Wallpaper(
-                    id = "",
-                    title = "",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy",
-                    isSaved = false
-                )
-            )
-        }
-        for (i in 1..10) {
-            items.add(
-                Collection(
-                    id = "",
-                    title = "Amoled Club",
-                    description = "A common pitch black wallpaper",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    wallpapers = subItems
-                )
-            )
-        }
-        favCollectionAdapter.setItems(items)
-        otherCollectionAdapter.setItems(items)
     }
 }
