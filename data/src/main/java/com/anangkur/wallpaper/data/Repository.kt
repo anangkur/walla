@@ -1,5 +1,6 @@
 package com.anangkur.wallpaper.data
 
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.data.repository.LocalRepository
 import com.anangkur.wallpaper.data.repository.RemoteRepository
 
@@ -15,6 +16,14 @@ class Repository (
         ) = INSTANCE ?: Repository(
             RepositoryFactory.getInstance(localRepository, remoteRepository)
         )
+    }
+
+    suspend fun retrieveWallpapers(): List<Wallpaper> {
+        return factory.retrieveCacheDataStore().retrieveWallpapers()
+    }
+
+    suspend fun insertWallpaper(wallpaper: Wallpaper) {
+        factory.retrieveCacheDataStore().insertWallpaper(wallpaper)
     }
 
 }
