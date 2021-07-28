@@ -5,9 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.anangkur.wallpaper.features.preview.databinding.ActivityPreviewBinding
-import com.anangkur.wallpaper.presentation.ARGS_CREATOR
-import com.anangkur.wallpaper.presentation.ARGS_IMAGE_URL
-import com.anangkur.wallpaper.presentation.ARGS_TITLE
+import com.anangkur.wallpaper.presentation.*
 import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
 import com.anangkur.wallpaper.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -16,9 +14,11 @@ class PreviewActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityPreviewBinding
 
+    private lateinit var id: String
     private lateinit var title: String
     private lateinit var creator: String
     private lateinit var imageUrl: String
+    private var isSaved = false
 
     private lateinit var previewViewModel: PreviewViewModel
 
@@ -59,9 +59,11 @@ class PreviewActivity: AppCompatActivity() {
     }
 
     private fun getArgs() {
+        id = intent.getStringExtra(ARGS_ID).orEmpty()
         title = intent.getStringExtra(ARGS_TITLE).orEmpty()
         creator = intent.getStringExtra(ARGS_CREATOR).orEmpty()
         imageUrl = intent.getStringExtra(ARGS_IMAGE_URL).orEmpty()
+        isSaved = intent.getBooleanExtra(ARGS_IS_SAVED, false)
     }
 
     private fun setData() {

@@ -60,7 +60,8 @@ class SavedFragment : Fragment() {
                 id = it.id,
                 title = it.title,
                 creator = it.creator,
-                imageUrl = it.imageUrl
+                imageUrl = it.imageUrl,
+                isSaved = it.isSaved
             ).show(childFragmentManager, tag)
         }
         binding.recyclerSaved.apply {

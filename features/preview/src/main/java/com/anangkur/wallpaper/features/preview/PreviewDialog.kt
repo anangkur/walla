@@ -24,6 +24,7 @@ class PreviewDialog : DialogFragment() {
     private lateinit var title: String
     private lateinit var creator: String
     private lateinit var imageUrl: String
+    private var isSaved: Boolean = false
 
     private lateinit var previewViewModel: PreviewViewModel
 
@@ -73,6 +74,7 @@ class PreviewDialog : DialogFragment() {
         title = arguments?.getString(ARGS_TITLE).orEmpty()
         creator = arguments?.getString(ARGS_CREATOR).orEmpty()
         imageUrl = arguments?.getString(ARGS_IMAGE_URL).orEmpty()
+        isSaved = arguments?.getBoolean(ARGS_IS_SAVED) ?: false
     }
 
     private fun setData() {
@@ -106,12 +108,19 @@ class PreviewDialog : DialogFragment() {
                     id = id,
                     title = title,
                     imageUrl = imageUrl,
-                    creator = creator
+                    creator = creator,
+                    isSaved = isSaved
                 )
             )
         }
         binding.btnFullscreen.setOnClickListener {
-            requireContext().startPreviewActivity(title = title, creator = creator, imageUrl = imageUrl, id = id)
+            requireContext().startPreviewActivity(
+                title = title,
+                creator = creator,
+                imageUrl = imageUrl,
+                id = id,
+                isSaved = isSaved
+            )
         }
     }
 

@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
 import com.anangkur.wallpaper.features.home.model.Collection
-import com.anangkur.wallpaper.features.home.model.WallpaperUiModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 
 class HomeFragment : Fragment() {
@@ -54,7 +54,8 @@ class HomeFragment : Fragment() {
                     id = it.id,
                     title = it.title,
                     creator = it.creator,
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    isSaved = it.isSaved
                 ).show(childFragmentManager, tag)
             }
         )
@@ -84,14 +85,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setDataDummySuggestion() {
-        val items = ArrayList<WallpaperUiModel>()
+        val items = ArrayList<Wallpaper>()
         for (i in 1..10) {
             items.add(
-                WallpaperUiModel(
+                Wallpaper(
                     id = "",
                     title = "Creation shel",
                     imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy"
+                    creator = "by Fallout legacy",
+                    isSaved = false
                 )
             )
         }
@@ -100,14 +102,15 @@ class HomeFragment : Fragment() {
 
     private fun setDataDummyCollection() {
         val items = ArrayList<Collection>()
-        val subItems = ArrayList<WallpaperUiModel>()
+        val subItems = ArrayList<Wallpaper>()
         for (i in 1..10) {
             subItems.add(
-                WallpaperUiModel(
+                Wallpaper(
                     id = "",
                     title = "",
                     imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy"
+                    creator = "by Fallout legacy",
+                    isSaved = false
                 )
             )
         }

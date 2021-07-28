@@ -16,6 +16,7 @@ const val ARGS_ID = "id"
 const val ARGS_TITLE = "title"
 const val ARGS_CREATOR = "creator"
 const val ARGS_IMAGE_URL = "imageUrl"
+const val ARGS_IS_SAVED = "isSaved"
 
 private fun getFragment(className: String) = Class.forName(className).newInstance() as Fragment
 private fun getDialogFragment(className: String) = Class.forName(className).newInstance() as DialogFragment
@@ -27,13 +28,15 @@ fun getPreviewDialog(
     id: String,
     title: String,
     creator: String,
-    imageUrl: String
+    imageUrl: String,
+    isSaved: Boolean
 ) = getDialogFragment(PREVIEW_DIALOG_FRAGMENT).apply {
     arguments = Bundle().apply {
         putString(ARGS_ID, id)
         putString(ARGS_TITLE, title)
         putString(ARGS_CREATOR, creator)
         putString(ARGS_IMAGE_URL, imageUrl)
+        putBoolean(ARGS_IS_SAVED, isSaved)
     }
 }
 
@@ -41,12 +44,14 @@ fun Context.startPreviewActivity(
     id: String,
     title: String,
     creator: String,
-    imageUrl: String
+    imageUrl: String,
+    isSaved: Boolean
 ) {
     startActivity(Intent(this, Class.forName(PREVIEW_ACTIVITY)).apply {
         putExtra(ARGS_ID, id)
         putExtra(ARGS_TITLE, title)
         putExtra(ARGS_CREATOR, creator)
         putExtra(ARGS_IMAGE_URL, imageUrl)
+        putExtra(ARGS_IS_SAVED, isSaved)
     })
 }

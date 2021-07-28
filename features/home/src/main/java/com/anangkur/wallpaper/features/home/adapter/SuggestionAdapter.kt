@@ -3,16 +3,16 @@ package com.anangkur.wallpaper.features.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.home.databinding.ItemSuggestionBinding
-import com.anangkur.wallpaper.features.home.model.WallpaperUiModel
 import com.anangkur.wallpaper.utils.setImageUrl
 
-class SuggestionAdapter(private val onClick: (WallpaperUiModel) -> Unit) : RecyclerView.Adapter<SuggestionAdapter.ViewHolder>() {
+class SuggestionAdapter(private val onClick: (Wallpaper) -> Unit) : RecyclerView.Adapter<SuggestionAdapter.ViewHolder>() {
 
-    private val items = ArrayList<WallpaperUiModel>()
+    private val items = ArrayList<Wallpaper>()
 
     inner class ViewHolder(private val binding: ItemSuggestionBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: WallpaperUiModel) {
+        fun bind(item: Wallpaper) {
             binding.ivSuggestion.setImageUrl(item.imageUrl)
             binding.root.setOnClickListener { onClick(item) }
         }
@@ -30,7 +30,7 @@ class SuggestionAdapter(private val onClick: (WallpaperUiModel) -> Unit) : Recyc
         return items.size
     }
 
-    fun setItems(items: List<WallpaperUiModel>) {
+    fun setItems(items: List<Wallpaper>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
