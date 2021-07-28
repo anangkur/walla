@@ -19,6 +19,10 @@ class Repository (
         )
     }
 
+    suspend fun retrieveSavedWallpaper(): List<Wallpaper> {
+        return factory.retrieveCacheDataStore().retrieveSavedWallpapers()
+    }
+
     suspend fun retrieveWallpapers(): List<Wallpaper> {
         return factory.retrieveCacheDataStore().retrieveWallpapers()
     }
