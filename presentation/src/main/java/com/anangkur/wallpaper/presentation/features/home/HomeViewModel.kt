@@ -9,6 +9,6 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     fun fetchWallpaper() = resultLiveData(
         databaseQuery = { repository.retrieveWallpapers() },
         networkCall = { repository.fetchWallpapers() },
-        saveCallResult = { data -> data.forEach { repository.insertWallpaper(it) } }
+        saveCallResult = { data -> data.forEach { repository.insertWallpaper(it, false) } }
     )
 }

@@ -27,8 +27,8 @@ class Repository (
         return factory.retrieveCacheDataStore().retrieveWallpapers()
     }
 
-    suspend fun insertWallpaper(wallpaper: Wallpaper) {
-        factory.retrieveCacheDataStore().insertWallpaper(wallpaper)
+    suspend fun insertWallpaper(wallpaper: Wallpaper, isReplace: Boolean) {
+        factory.retrieveCacheDataStore().insertWallpaper(wallpaper, isReplace)
     }
 
     suspend fun deleteWallpaper(id: String) {

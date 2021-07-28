@@ -8,6 +8,9 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertWallpaper(wallpaper: DatabaseEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertWallpaperReplace(wallpaper: DatabaseEntity)
+
     @Query("SELECT * FROM DatabaseEntity")
     fun loadAllWallpaper(): List<DatabaseEntity>
 

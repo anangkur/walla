@@ -27,8 +27,12 @@ class LocalRepository(
         appDatabase.getDao().deleteWallpaperById(id)
     }
 
-    override suspend fun insertWallpaper(wallpaper: Wallpaper) {
-        appDatabase.getDao().insertWallpaper(wallpaper = wallpaper.toDatabaseEntity())
+    override suspend fun insertWallpaper(wallpaper: Wallpaper, isReplace: Boolean) {
+        if (isReplace) {
+            appDatabase.getDao().insertWallpaperReplace(wallpaper = wallpaper.toDatabaseEntity())
+        } else {
+            appDatabase.getDao().insertWallpaper(wallpaper = wallpaper.toDatabaseEntity())
+        }
     }
 
     override suspend fun retrieveWallpapers(): List<Wallpaper> {
