@@ -6,5 +6,6 @@ dependencies {
     implementation(project(':data'))
     implementation(project(':local'))
     implementation(project(':remote'))
-    implementation Deps.androidxLifeCycleExtension
+    api Deps.androidxLifeCycleExtension
+    implementation Deps.toolsKotlinJdk8
 }
