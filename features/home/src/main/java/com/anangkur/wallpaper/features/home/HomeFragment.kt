@@ -17,6 +17,7 @@ import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.presentation.model.BaseResult.Companion.Status
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
+import com.anangkur.wallpaper.R as APP_R
 
 class HomeFragment : Fragment() {
 
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
     private fun observeViewModel() {
         homeViewModel.fetchWallpaper().observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(R.string.error_default) })
+                Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
                 Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
                 Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
             }
