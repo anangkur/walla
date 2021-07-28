@@ -1,4 +1,5 @@
 rootProject.name='Wallpaper App'
+include ':injection'
 include ':presentation'
 include ':features:home'
 include ':features:search'
