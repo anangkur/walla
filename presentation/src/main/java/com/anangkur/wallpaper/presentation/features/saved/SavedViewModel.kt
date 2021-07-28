@@ -31,4 +31,17 @@ class SavedViewModel(private val repository: Repository): ViewModel() {
             }
         }
     }
+
+    fun searchWallpaper(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _loading.postValue(true)
+            repository.searchWallpaper(query).runCatching {
+                _loading.postValue(false)
+                _wallpapers.postValue(this)
+            }.onFailure {
+                _loading.postValue(false)
+                _error.postValue(it.message)
+            }
+        }
+    }
 }
