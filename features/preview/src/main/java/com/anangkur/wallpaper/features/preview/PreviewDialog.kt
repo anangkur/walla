@@ -11,6 +11,7 @@ import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
 import com.anangkur.wallpaper.presentation.*
 import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
+import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel.Companion.Action
 import com.anangkur.wallpaper.R as APP_R
 import com.anangkur.wallpaper.features.preview.R as PREVIEW_R
 import com.anangkur.wallpaper.utils.*
@@ -57,6 +58,12 @@ class PreviewDialog : DialogFragment() {
             })
             error.observe(viewLifecycleOwner, Observer {
                 requireActivity().showSnackbarShort(it)
+            })
+            success.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    Action.Delete -> requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_deleted))
+                    Action.Insert -> requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_saved))
+                }
             })
         }
     }
@@ -121,7 +128,7 @@ class PreviewDialog : DialogFragment() {
                 setLoadingSet(false)
                 requireContext().setWallpaperDevice(it)
                 dialog?.hide()
-                requireActivity().showSnackbarShort(getString(com.anangkur.wallpaper.features.preview.R.string.message_success_set_wallpaper))
+                requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_success_set_wallpaper))
             },
             imageUrl = imageUrl
         )
