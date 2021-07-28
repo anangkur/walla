@@ -34,6 +34,7 @@ class SavedFragment : Fragment() {
         observeViewModel()
         setupRecyclerSaved()
         setupSwipeRefresh()
+        setupSearch()
         savedViewModel.retrieveWallpaper()
     }
 
@@ -81,7 +82,12 @@ class SavedFragment : Fragment() {
     private fun setupSearch() {
         binding.searchSaved.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { if (it.isNotEmpty()) savedViewModel.searchWallpaper(it) }
+                query?.let {
+                    if (it.isNotEmpty())
+                        savedViewModel.searchWallpaper(it)
+                    else
+                        savedViewModel.retrieveWallpaper()
+                }
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
