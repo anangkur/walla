@@ -1,6 +1,4 @@
-package com.anangkur.wallpaper.features.home.model
-
-import com.anangkur.wallpaper.data.model.Wallpaper
+package com.anangkur.wallpaper.data.model
 
 data class Collection(
     val id: String,

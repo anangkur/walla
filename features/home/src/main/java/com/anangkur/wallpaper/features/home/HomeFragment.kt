@@ -12,7 +12,7 @@ import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
-import com.anangkur.wallpaper.features.home.model.Collection
+import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 
 class HomeFragment : Fragment() {
