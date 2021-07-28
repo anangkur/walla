@@ -20,6 +20,10 @@ class MainActivity: AppCompatActivity(){
 
         setContentView(binding.root)
 
+        start()
+    }
+
+    fun start() {
         setupNavigationView()
         binding.bottomNav.selectedItemId = R.id.home
     }

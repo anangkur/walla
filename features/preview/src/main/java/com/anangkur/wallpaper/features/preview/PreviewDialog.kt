@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.feature.MainActivity
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
 import com.anangkur.wallpaper.presentation.*
 import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
@@ -62,17 +63,15 @@ class PreviewDialog : DialogFragment() {
                 requireActivity().showSnackbarShort(it)
             })
             success.observe(viewLifecycleOwner, Observer {
+                isSaved = !isSaved
+                setData()
+                dialog?.hide()
+                (requireActivity() as MainActivity).start()
                 when (it) {
                     Action.Delete -> {
-                        isSaved = !isSaved
-                        setData()
-                        dialog?.hide()
                         requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_deleted))
                     }
                     Action.Insert -> {
-                        isSaved = !isSaved
-                        setData()
-                        dialog?.hide()
                         requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_saved))
                     }
                 }
