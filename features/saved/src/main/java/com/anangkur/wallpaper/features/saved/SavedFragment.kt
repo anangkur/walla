@@ -6,16 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.saved.databinding.FragmentSavedBinding
+import com.anangkur.wallpaper.presentation.features.saved.SavedViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
+import com.anangkur.wallpaper.utils.obtainViewModel
+import com.anangkur.wallpaper.utils.showSnackbarShort
 
 class SavedFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedBinding
     private lateinit var savedAdapter: SavedAdapter
+
+    private lateinit var savedViewModel: SavedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSavedBinding.inflate(inflater, container, false).also { binding = it }.root
@@ -24,9 +29,29 @@ class SavedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewModel()
+        observeViewModel()
         setupRecyclerSaved()
         setupSwipeRefresh()
-        setDataDummy()
+        savedViewModel.retrieveWallpaper()
+    }
+
+    private fun setupViewModel() {
+        savedViewModel = obtainViewModel(SavedViewModel::class.java)
+    }
+
+    private fun observeViewModel() {
+        savedViewModel.apply {
+            wallpapers.observe(viewLifecycleOwner, Observer {
+                savedAdapter.setItems(it)
+            })
+            loading.observe(viewLifecycleOwner, Observer {
+                binding.swipeSaved.isRefreshing = it
+            })
+            error.observe(viewLifecycleOwner, Observer {
+                requireActivity().showSnackbarShort(it)
+            })
+        }
     }
 
     private fun setupRecyclerSaved() {
@@ -46,23 +71,7 @@ class SavedFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         binding.swipeSaved.setOnRefreshListener {
-            setDataDummy()
-            binding.swipeSaved.isRefreshing = false
+            savedViewModel.retrieveWallpaper()
         }
-    }
-
-    private fun setDataDummy() {
-        val items = ArrayList<Wallpaper>()
-        for (i in 1..10) {
-            items.add(
-                Wallpaper(
-                    id = "",
-                    title = "Creation shel",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy"
-                )
-            )
-        }
-        savedAdapter.setItems(items)
     }
 }
