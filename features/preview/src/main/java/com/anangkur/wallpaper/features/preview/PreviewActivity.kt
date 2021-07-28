@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anangkur.wallpaper.features.preview.databinding.ActivityPreviewBinding
+import com.anangkur.wallpaper.presentation.ARGS_CREATOR
+import com.anangkur.wallpaper.presentation.ARGS_IMAGE_URL
+import com.anangkur.wallpaper.presentation.ARGS_TITLE
 import com.anangkur.wallpaper.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 

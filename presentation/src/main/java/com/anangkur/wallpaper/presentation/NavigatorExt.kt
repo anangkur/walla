@@ -1,4 +1,4 @@
-package com.anangkur.wallpaper.utils
+package com.anangkur.wallpaper.presentation
 
 import android.content.Context
 import android.content.Intent

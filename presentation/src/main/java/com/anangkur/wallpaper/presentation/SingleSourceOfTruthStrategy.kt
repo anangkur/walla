@@ -1,8 +1,8 @@
-package com.anangkur.wallpaper.utils
+package com.anangkur.wallpaper.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.anangkur.wallpaper.model.BaseResult
+import com.anangkur.wallpaper.presentation.model.BaseResult
 import kotlinx.coroutines.Dispatchers
 
 fun <T, A> resultLiveData(

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.saved.databinding.FragmentSavedBinding
-import com.anangkur.wallpaper.utils.getPreviewDialog
+import com.anangkur.wallpaper.presentation.getPreviewDialog
 
 class SavedFragment : Fragment() {
 

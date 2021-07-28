@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
+import com.anangkur.wallpaper.presentation.ARGS_CREATOR
+import com.anangkur.wallpaper.presentation.ARGS_IMAGE_URL
+import com.anangkur.wallpaper.presentation.ARGS_TITLE
+import com.anangkur.wallpaper.presentation.startPreviewActivity
 import com.anangkur.wallpaper.R as APP_R
 import com.anangkur.wallpaper.features.preview.R as PREVIEW_R
 import com.anangkur.wallpaper.utils.*
