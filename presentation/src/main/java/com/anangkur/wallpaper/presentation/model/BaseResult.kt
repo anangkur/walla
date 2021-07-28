@@ -1,7 +1,7 @@
 package com.anangkur.wallpaper.presentation.model
 
 data class BaseResult<out T>(
-    val status: Int,
+    val status: Status,
     val data: T?,
     val message: String?,
     val isLoading: Boolean?
@@ -9,13 +9,15 @@ data class BaseResult<out T>(
 
     companion object {
 
-        const val STATE_SUCCESS = 1
-        const val STATE_ERROR = -1
-        const val STATE_LOADING = 0
+        sealed class Status {
+            object Success: Status()
+            object Error: Status()
+            object Loading: Status()
+        }
 
         fun <T> success(data: T): BaseResult<T> {
             return BaseResult(
-                STATE_SUCCESS,
+                Status.Success,
                 data,
                 null,
                 null
@@ -24,7 +26,7 @@ data class BaseResult<out T>(
 
         fun <T> error(message: String): BaseResult<T> {
             return BaseResult(
-                STATE_ERROR,
+                Status.Error,
                 null,
                 message,
                 null
@@ -33,7 +35,7 @@ data class BaseResult<out T>(
 
         fun <T> loading(isLoading: Boolean): BaseResult<T> {
             return BaseResult(
-                STATE_LOADING,
+                Status.Loading,
                 null,
                 null,
                 isLoading
