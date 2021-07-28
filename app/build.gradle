@@ -29,14 +29,12 @@ android {
 }
 
 dependencies {
-    implementation(project(':data'))
+    api(project(':presentation'))
+    api(project(':injection'))
     api Deps.googleMaterial
-    implementation Deps.materialLoadingButton
-    api Deps.toolsKotlinJdk8
     api Deps.androidxConstraintLayout
-    implementation Deps.androidxLifeCycleExtension
-    implementation Deps.glide
+    api Deps.toolsKotlinJdk8
     kapt Deps.glideCompiler
-    implementation Deps.androidxLifeCycleExtension
-    implementation Deps.androidxLivedata
+    implementation Deps.glide
+    implementation Deps.materialLoadingButton
 }

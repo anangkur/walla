@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.wallpaper.features.home.databinding.ItemFavCollectionBinding
-import com.anangkur.wallpaper.features.home.model.Collection
+import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.utils.setImageUrl
 
 class FavCollectionAdapter : RecyclerView.Adapter<FavCollectionAdapter.ViewHolder>() {

@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
-import com.anangkur.wallpaper.features.home.model.Collection
-import com.anangkur.wallpaper.features.home.model.WallpaperUiModel
-import com.anangkur.wallpaper.utils.getPreviewDialog
+import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
+import com.anangkur.wallpaper.presentation.getPreviewDialog
+import com.anangkur.wallpaper.presentation.model.BaseResult.Companion.Status
+import com.anangkur.wallpaper.utils.obtainViewModel
+import com.anangkur.wallpaper.utils.showSnackbarShort
+import com.anangkur.wallpaper.R as APP_R
 
 class HomeFragment : Fragment() {
 
@@ -23,6 +27,8 @@ class HomeFragment : Fragment() {
     private lateinit var favCollectionAdapter: FavCollectionAdapter
     private lateinit var otherCollectionAdapter: OtherCollectionAdapter
 
+    private lateinit var homeViewModel: HomeViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentHomeBinding.inflate(inflater, container, false).also { binding = it }.root
     }
@@ -30,19 +36,30 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewModel()
         setupSwipeRefresh()
         setupSuggestionAdapter()
         setupFavCollectionAdapter()
         setupOtherCollectionAdapter()
+        observeViewModel()
+    }
 
-        setDataDummyCollection()
-        setDataDummySuggestion()
+    private fun setupViewModel() {
+        homeViewModel = obtainViewModel(HomeViewModel::class.java)
+    }
+
+    private fun observeViewModel() {
+        homeViewModel.fetchWallpaper().observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+                Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
+                Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
+            }
+        })
     }
 
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
-            setDataDummyCollection()
-            setDataDummySuggestion()
             binding.root.isRefreshing = false
         }
     }
@@ -51,9 +68,11 @@ class HomeFragment : Fragment() {
         suggestionAdapter = SuggestionAdapter(
             onClick = {
                 getPreviewDialog(
+                    id = it.id,
                     title = it.title,
                     creator = it.creator,
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    isSaved = it.isSaved
                 ).show(childFragmentManager, tag)
             }
         )
@@ -80,48 +99,5 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
-    }
-
-    private fun setDataDummySuggestion() {
-        val items = ArrayList<WallpaperUiModel>()
-        for (i in 1..10) {
-            items.add(
-                WallpaperUiModel(
-                    id = "",
-                    title = "Creation shel",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy"
-                )
-            )
-        }
-        suggestionAdapter.setItems(items)
-    }
-
-    private fun setDataDummyCollection() {
-        val items = ArrayList<Collection>()
-        val subItems = ArrayList<WallpaperUiModel>()
-        for (i in 1..10) {
-            subItems.add(
-                WallpaperUiModel(
-                    id = "",
-                    title = "",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy"
-                )
-            )
-        }
-        for (i in 1..10) {
-            items.add(
-                Collection(
-                    id = "",
-                    title = "Amoled Club",
-                    description = "A common pitch black wallpaper",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    wallpapers = subItems
-                )
-            )
-        }
-        favCollectionAdapter.setItems(items)
-        otherCollectionAdapter.setItems(items)
     }
 }

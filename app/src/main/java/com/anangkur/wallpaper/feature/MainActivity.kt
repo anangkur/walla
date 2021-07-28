@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.anangkur.wallpaper.R
 import com.anangkur.wallpaper.databinding.ActivityMainBinding
-import com.anangkur.wallpaper.utils.getHomeFragment
-import com.anangkur.wallpaper.utils.getSavedFragment
-import com.anangkur.wallpaper.utils.getSearchFragment
+import com.anangkur.wallpaper.presentation.getHomeFragment
+import com.anangkur.wallpaper.presentation.getSavedFragment
+import com.anangkur.wallpaper.presentation.getSearchFragment
 
 class MainActivity: AppCompatActivity(){
 
@@ -20,6 +20,10 @@ class MainActivity: AppCompatActivity(){
 
         setContentView(binding.root)
 
+        start()
+    }
+
+    fun start() {
         setupNavigationView()
         binding.bottomNav.selectedItemId = R.id.home
     }

@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+    api(project(':data'))
+    implementation Deps.androidxFragment
+    implementation Deps.androidxLivedata
+    implementation Deps.androidxViewModel
+}

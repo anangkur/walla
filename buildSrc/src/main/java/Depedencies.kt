@@ -21,6 +21,7 @@ object Versions {
     const val junit = "4.12"
     const val androidxEspresso = "3.1.0"
     const val androidxTesting = "1.1.1"
+    const val androidxFragmentVersion = "1.3.6"
 
     const val appCompatVersion = "1.1.0"
     const val materialVersion = "1.0.0"
@@ -57,6 +58,7 @@ object Deps {
     const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
     const val androidxSwipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshVersion}"
     const val androidxCardView = "androidx.cardview:cardview:${Versions.cardViewVersion}"
+    const val androidxFragment = "androidx.fragment:fragment:${Versions.androidxFragmentVersion}"
 
     // navigation component
     const val androidxNavFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navComponentVersion}"
