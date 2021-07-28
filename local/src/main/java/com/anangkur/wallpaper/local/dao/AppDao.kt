@@ -5,7 +5,7 @@ import com.anangkur.wallpaper.local.model.DatabaseEntity
 
 @Dao
 interface AppDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertWallpaper(wallpaper: DatabaseEntity)
 
     @Query("SELECT * FROM DatabaseEntity")
