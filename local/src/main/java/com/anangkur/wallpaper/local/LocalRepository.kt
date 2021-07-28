@@ -23,6 +23,10 @@ class LocalRepository(
 
     private val expirationTime = (60 * 10 * 1000).toLong()
 
+    override suspend fun deleteWallpaper(id: String) {
+        appDatabase.getDao().deleteWallpaperById(id)
+    }
+
     override suspend fun insertWallpaper(wallpaper: Wallpaper) {
         appDatabase.getDao().insertWallpaper(wallpaper = wallpaper.toDatabaseEntity())
     }

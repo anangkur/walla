@@ -10,4 +10,7 @@ interface AppDao {
 
     @Query("SELECT * FROM DatabaseEntity")
     fun loadAllWallpaper(): List<DatabaseEntity>
+
+    @Query("DELETE FROM DatabaseEntity WHERE id = :id")
+    fun deleteWallpaperById(id: String)
 }
