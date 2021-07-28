@@ -5,6 +5,10 @@ import com.anangkur.wallpaper.local.model.DatabaseEntity
 
 @Dao
 interface AppDao {
+
+    @Query("SELECT * FROM DatabaseEntity WHERE title LIKE :query")
+    fun selectWallpapersContainsQuery(query: String): List<DatabaseEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertWallpaper(wallpaper: DatabaseEntity)
 

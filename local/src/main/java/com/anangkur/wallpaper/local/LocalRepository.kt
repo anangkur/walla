@@ -22,6 +22,9 @@ class LocalRepository(
     }
 
     private val expirationTime = (60 * 10 * 1000).toLong()
+    override suspend fun searchWallpaper(query: String): List<Wallpaper> {
+        return appDatabase.getDao().selectWallpapersContainsQuery(query).map { it.toWallpaper() }
+    }
 
     override suspend fun deleteWallpaper(id: String) {
         appDatabase.getDao().deleteWallpaperById(id)
