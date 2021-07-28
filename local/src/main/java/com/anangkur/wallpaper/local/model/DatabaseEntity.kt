@@ -8,6 +8,7 @@ import com.anangkur.wallpaper.data.model.Wallpaper
 
 @Entity
 data class DatabaseEntity(
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,
 
