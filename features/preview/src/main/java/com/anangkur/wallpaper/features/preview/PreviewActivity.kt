@@ -96,7 +96,7 @@ class PreviewActivity: AppCompatActivity() {
 
     private fun saveAction(wallpaper: Wallpaper) {
         if (isSaved) {
-            previewViewModel.deleteWallpaper(wallpaper.id)
+            previewViewModel.deleteWallpaper(wallpaper)
         } else {
             previewViewModel.insertWallpaper(wallpaper)
         }

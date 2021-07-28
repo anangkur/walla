@@ -30,7 +30,7 @@ class PreviewViewModel(private val repository: Repository): ViewModel() {
     fun insertWallpaper(wallpaper: Wallpaper) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
-            repository.insertWallpaper(wallpaper).runCatching {
+            repository.insertWallpaper(wallpaper.copy(isSaved = true)).runCatching {
                 _loading.postValue(false)
                 _success.postValue(Action.Insert)
             }.onFailure {
@@ -40,12 +40,12 @@ class PreviewViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun deleteWallpaper(id: String) {
+    fun deleteWallpaper(wallpaper: Wallpaper) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
-            repository.deleteWallpaper(id).runCatching {
+            repository.insertWallpaper(wallpaper.copy(isSaved = false)).runCatching {
                 _loading.postValue(false)
-                _success.postValue(Action.Delete)
+                _success.postValue(Action.Insert)
             }.onFailure {
                 _loading.postValue(false)
                 _error.postValue(it.message)
