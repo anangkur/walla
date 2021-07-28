@@ -26,4 +26,8 @@ class Repository (
         factory.retrieveCacheDataStore().insertWallpaper(wallpaper)
     }
 
+    suspend fun deleteWallpaper(id: String) {
+        factory.retrieveCacheDataStore().deleteWallpaper(id)
+    }
+
 }
