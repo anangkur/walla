@@ -30,6 +30,7 @@ android {
 
 dependencies {
     api(project(':data'))
+    api(project(':presentation'))
     api Deps.googleMaterial
     implementation Deps.materialLoadingButton
     api Deps.toolsKotlinJdk8
