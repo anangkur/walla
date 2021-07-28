@@ -6,5 +6,6 @@ interface LocalRepository {
     suspend fun deleteWallpaper(id: String)
     suspend fun insertWallpaper(wallpaper: Wallpaper)
     suspend fun retrieveWallpapers(): List<Wallpaper>
+    suspend fun retrieveSavedWallpapers(): List<Wallpaper>
     fun isExpired(): Boolean
 }

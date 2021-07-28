@@ -11,6 +11,9 @@ interface AppDao {
     @Query("SELECT * FROM DatabaseEntity")
     fun loadAllWallpaper(): List<DatabaseEntity>
 
+    @Query("SELECT * FROM DatabaseEntity WHERE isSaved = :isSaved")
+    fun loadAllSavedWallpaper(isSaved: Boolean = true): List<DatabaseEntity>
+
     @Query("DELETE FROM DatabaseEntity WHERE id = :id")
     fun deleteWallpaperById(id: String)
 }

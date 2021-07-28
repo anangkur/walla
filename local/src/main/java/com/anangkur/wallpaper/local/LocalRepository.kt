@@ -35,6 +35,10 @@ class LocalRepository(
         return appDatabase.getDao().loadAllWallpaper().map { it.toWallpaper() }
     }
 
+    override suspend fun retrieveSavedWallpapers(): List<Wallpaper> {
+        return appDatabase.getDao().loadAllSavedWallpaper().map { it.toWallpaper() }
+    }
+
     override fun isExpired(): Boolean {
         val currentTime = System.currentTimeMillis()
         val lastUpdateTime = this.getLastCacheUpdateTimeMillis()
