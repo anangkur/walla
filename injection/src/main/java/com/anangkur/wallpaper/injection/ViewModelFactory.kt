@@ -3,6 +3,7 @@ package com.anangkur.wallpaper.injection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anangkur.wallpaper.data.Repository
+import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
 import com.anangkur.wallpaper.presentation.features.saved.SavedViewModel
 
 class ViewModelFactory(private val repository: Repository): ViewModelProvider.NewInstanceFactory() {
@@ -11,6 +12,7 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
         with(modelClass) {
             when {
                 isAssignableFrom(SavedViewModel::class.java) -> SavedViewModel(repository = repository)
+                isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository = repository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
