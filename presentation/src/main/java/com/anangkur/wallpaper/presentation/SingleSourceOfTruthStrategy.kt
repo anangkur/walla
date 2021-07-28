@@ -6,7 +6,7 @@ import com.anangkur.wallpaper.presentation.model.BaseResult
 import kotlinx.coroutines.Dispatchers
 
 fun <T, A> resultLiveData(
-    databaseQuery: () -> T,
+    databaseQuery: suspend () -> T,
     networkCall: suspend () -> A,
     saveCallResult: suspend (A) -> Unit
 ): LiveData<BaseResult<T>> =
