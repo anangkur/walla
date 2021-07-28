@@ -17,7 +17,7 @@ class RemoteRepository: RemoteRepository {
             items.add(
                 Wallpaper(
                     id = i.toString(),
-                    title = "Creation shel",
+                    title = "Creation shel $i",
                     imageUrl = "https://picsum.photos/1080/1920",
                     creator = "by Fallout legacy",
                     isSaved = false
@@ -33,8 +33,8 @@ class RemoteRepository: RemoteRepository {
         for (i in 1..10) {
             subItems.add(
                 Wallpaper(
-                    id = "",
-                    title = "",
+                    id = i.toString(),
+                    title = "Creation shel $i",
                     imageUrl = "https://picsum.photos/1080/1920",
                     creator = "by Fallout legacy",
                     isSaved = false
@@ -44,8 +44,8 @@ class RemoteRepository: RemoteRepository {
         for (i in 1..10) {
             items.add(
                 Collection(
-                    id = "",
-                    title = "Amoled Club",
+                    id = i.toString(),
+                    title = "Amoled Club $i",
                     description = "A common pitch black wallpaper",
                     imageUrl = "https://picsum.photos/1080/1920",
                     wallpapers = subItems
