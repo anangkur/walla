@@ -13,6 +13,8 @@ class MainActivity: AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
 
+    var activeTabId = R.id.home
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,11 +27,12 @@ class MainActivity: AppCompatActivity(){
 
     fun start() {
         setupNavigationView()
-        binding.bottomNav.selectedItemId = R.id.home
+        binding.bottomNav.selectedItemId = activeTabId
     }
 
     private fun setupNavigationView() {
         binding.bottomNav.setOnNavigationItemSelectedListener {
+            activeTabId = it.itemId
             when (it.itemId) {
                 R.id.home -> {
                     setFragment(getHomeFragment())
