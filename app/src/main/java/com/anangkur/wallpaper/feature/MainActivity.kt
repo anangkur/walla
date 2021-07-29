@@ -1,5 +1,6 @@
 package com.anangkur.wallpaper.feature
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -23,6 +24,10 @@ class MainActivity: AppCompatActivity(){
         setContentView(binding.root)
 
         start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     fun start() {
