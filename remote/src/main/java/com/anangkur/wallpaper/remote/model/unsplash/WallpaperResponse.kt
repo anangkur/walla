@@ -42,5 +42,6 @@ fun WallpaperResponse.toWallpaper() = Wallpaper(
     creator = user?.name.orEmpty().ifEmpty { "-" },
     imageUrl = urls?.full.orEmpty(),
     isSaved = false,
-    title = description.orEmpty().ifEmpty { altDescription.orEmpty().ifEmpty { "-" } }
+    title = description.orEmpty().ifEmpty { altDescription.orEmpty().ifEmpty { "-" } },
+    thumbnailUrl = urls?.regular.orEmpty()
 )

@@ -20,6 +20,7 @@ class PreviewActivity: AppCompatActivity() {
     private lateinit var title: String
     private lateinit var creator: String
     private lateinit var imageUrl: String
+    private lateinit var thumbnailUrl: String
     private var isSaved = false
     private var isChanged = false
 
@@ -86,10 +87,11 @@ class PreviewActivity: AppCompatActivity() {
         creator = intent.getStringExtra(ARGS_CREATOR).orEmpty()
         imageUrl = intent.getStringExtra(ARGS_IMAGE_URL).orEmpty()
         isSaved = intent.getBooleanExtra(ARGS_IS_SAVED, false)
+        thumbnailUrl = intent.getStringExtra(ARGS_THUMBNAIL_URL).orEmpty()
     }
 
     private fun setData() {
-        binding.ivPreview.setImageUrl(imageUrl)
+        binding.ivPreview.setImageUrl(thumbnailUrl)
         binding.tvTitle.text = title
         binding.tvCreator.text = creator
         binding.ivSave.setImageDrawable(getIconSave(isSaved))
@@ -125,7 +127,8 @@ class PreviewActivity: AppCompatActivity() {
                     title = title,
                     imageUrl = imageUrl,
                     creator = creator,
-                    isSaved = isSaved
+                    isSaved = isSaved,
+                    thumbnailUrl = thumbnailUrl
                 )
             )
         }

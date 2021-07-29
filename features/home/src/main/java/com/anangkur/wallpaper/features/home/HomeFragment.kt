@@ -78,7 +78,8 @@ class HomeFragment : Fragment() {
                     title = it.title,
                     creator = it.creator,
                     imageUrl = it.imageUrl,
-                    isSaved = it.isSaved
+                    isSaved = it.isSaved,
+                    thumbnailUrl = it.thumbnailUrl
                 ).show(childFragmentManager, tag)
             }
         )

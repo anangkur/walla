@@ -14,7 +14,7 @@ class SavedAdapter(private val onClick: (Wallpaper) -> Unit) : RecyclerView.Adap
     inner class ViewHolder(private val binding: ItemSavedBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Wallpaper) {
             binding.root.setOnClickListener { onClick(item) }
-            binding.ivSaved.setImageUrl(item.imageUrl)
+            binding.ivSaved.setImageUrl(item.thumbnailUrl)
             binding.tvTitleSaved.text = item.title
         }
     }

@@ -27,7 +27,8 @@ class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepo
                     title = "Creation shel $i",
                     imageUrl = "https://picsum.photos/1080/1920",
                     creator = "by Fallout legacy",
-                    isSaved = false
+                    isSaved = false,
+                    thumbnailUrl = "https://picsum.photos/1080/1920"
                 )
             )
         }

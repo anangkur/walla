@@ -30,6 +30,7 @@ class PreviewDialog : DialogFragment() {
     private lateinit var imageUrl: String
     private var isSaved: Boolean = false
     private var isChanged = false
+    private lateinit var thumbnailUrl: String
 
     private lateinit var previewViewModel: PreviewViewModel
 
@@ -102,12 +103,13 @@ class PreviewDialog : DialogFragment() {
         creator = arguments?.getString(ARGS_CREATOR).orEmpty()
         imageUrl = arguments?.getString(ARGS_IMAGE_URL).orEmpty()
         isSaved = arguments?.getBoolean(ARGS_IS_SAVED) ?: false
+        thumbnailUrl = arguments?.getString(ARGS_THUMBNAIL_URL).orEmpty()
     }
 
     private fun setData() {
         binding.tvTitle.text = title
         binding.tvCreator.text = creator
-        binding.ivPreview.setImageUrl(imageUrl)
+        binding.ivPreview.setImageUrl(thumbnailUrl)
         binding.ivSave.setImageDrawable(getIconSave(isSaved))
         binding.tvSave.text = getTextSave(isSaved)
     }
@@ -149,7 +151,8 @@ class PreviewDialog : DialogFragment() {
                     title = title,
                     imageUrl = imageUrl,
                     creator = creator,
-                    isSaved = isSaved
+                    isSaved = isSaved,
+                    thumbnailUrl = thumbnailUrl
                 )
             )
         }
@@ -159,7 +162,8 @@ class PreviewDialog : DialogFragment() {
                 creator = creator,
                 imageUrl = imageUrl,
                 id = id,
-                isSaved = isSaved
+                isSaved = isSaved,
+                thumbnailUrl = thumbnailUrl
             )
         }
     }
