@@ -3,6 +3,7 @@ package com.anangkur.wallpaper.remote
 import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.data.repository.RemoteRepository
+import com.anangkur.wallpaper.remote.model.unsplash.toWallpaper
 import com.anangkur.wallpaper.remote.services.UnsplashService
 
 class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepository {
@@ -12,20 +13,8 @@ class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepo
         fun getInstance(unsplashService: UnsplashService) = INSTANCE ?: RemoteRepository(unsplashService)
     }
 
-    override suspend fun fetchWallpaper(): List<Wallpaper> {
-        val items = ArrayList<Wallpaper>()
-        for (i in 1..10) {
-            items.add(
-                Wallpaper(
-                    id = i.toString(),
-                    title = "Creation shel $i",
-                    imageUrl = "https://picsum.photos/1080/1920",
-                    creator = "by Fallout legacy",
-                    isSaved = false
-                )
-            )
-        }
-        return items
+    override suspend fun fetchWallpaper(clientId: String): List<Wallpaper> {
+        return unsplashService.getPhotos(clientId).map { it.toWallpaper() }
     }
 
     override suspend fun fetchCollection(): List<Collection> {
