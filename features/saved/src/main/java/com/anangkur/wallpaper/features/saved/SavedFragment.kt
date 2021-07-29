@@ -82,15 +82,11 @@ class SavedFragment : Fragment() {
     private fun setupSearch() {
         binding.searchSaved.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    if (it.isNotEmpty())
-                        savedViewModel.searchWallpaper(it)
-                    else
-                        savedViewModel.retrieveWallpaper()
-                }
+                if (query.orEmpty().isNotEmpty()) savedViewModel.searchWallpaper(query.orEmpty())
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.orEmpty().isEmpty()) savedViewModel.retrieveWallpaper()
                 return true
             }
         })
