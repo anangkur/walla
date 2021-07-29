@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.anangkur.wallpaper.BuildConfig
 import com.anangkur.wallpaper.R
 import com.anangkur.wallpaper.injection.Injector
 import com.bumptech.glide.Glide
@@ -37,10 +38,10 @@ import java.text.DecimalFormatSymbols
 import java.util.regex.Pattern
 
 fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, Injector.provideViewModelFactory(this)).get(viewModelClass)
+    ViewModelProviders.of(this, Injector.provideViewModelFactory(this, BuildConfig.UNSPLASH_ENDPOINT)).get(viewModelClass)
 
 fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, Injector.provideViewModelFactory(requireContext())).get(viewModelClass)
+    ViewModelProviders.of(this, Injector.provideViewModelFactory(requireContext(), BuildConfig.UNSPLASH_ENDPOINT)).get(viewModelClass)
 
 fun Activity.showSnackbarLong(message: String){
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()

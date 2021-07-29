@@ -3,12 +3,13 @@ package com.anangkur.wallpaper.remote
 import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.data.repository.RemoteRepository
+import com.anangkur.wallpaper.remote.services.UnsplashService
 
-class RemoteRepository: RemoteRepository {
+class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepository {
 
     companion object{
         private var INSTANCE: RemoteRepository? = null
-        fun getInstance() = INSTANCE ?: RemoteRepository()
+        fun getInstance(unsplashService: UnsplashService) = INSTANCE ?: RemoteRepository(unsplashService)
     }
 
     override suspend fun fetchWallpaper(): List<Wallpaper> {
