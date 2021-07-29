@@ -65,7 +65,6 @@ class PreviewDialog : DialogFragment() {
             success.observe(viewLifecycleOwner, Observer {
                 isSaved = !isSaved
                 setData()
-                dialog?.hide()
                 (requireActivity() as MainActivity).start()
                 when (it) {
                     Action.Delete -> {
