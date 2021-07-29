@@ -3,11 +3,19 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply from: 'https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     defaultConfig {
         applicationId "com.anangkur.wallpaper"
         versionCode Config.versionCode
         versionName Config.versionName
+
+        buildConfigField("String", "UNSPLASH_ACCESS_KEY", apikeyProperties['UNSPLASH_ACCESS_KEY'])
+        buildConfigField("String", "UNSPLASH_SECRET_KEY", apikeyProperties['UNSPLASH_SECRET_KEY'])
+        buildConfigField("String", "UNSPLASH_ENDPOINT", apikeyProperties['UNSPLASH_ENDPOINT'])
     }
 
     buildTypes {
