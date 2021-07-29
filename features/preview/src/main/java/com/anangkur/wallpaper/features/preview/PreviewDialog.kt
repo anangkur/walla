@@ -1,6 +1,8 @@
 package com.anangkur.wallpaper.features.preview
 
 import android.app.Dialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +29,7 @@ class PreviewDialog : DialogFragment() {
     private lateinit var creator: String
     private lateinit var imageUrl: String
     private var isSaved: Boolean = false
+    private var isChanged = false
 
     private lateinit var previewViewModel: PreviewViewModel
 
@@ -50,6 +53,21 @@ class PreviewDialog : DialogFragment() {
         setDialogToTransparent()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_PREVIEW && resultCode == RESULT_CHANGE_SAVED_STATE) {
+            isSaved = data?.getBooleanExtra(ARGS_IS_SAVED, false) ?: false
+            isChanged = true
+            setData()
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        if (isChanged) (requireActivity() as MainActivity).start()
+        else super.onDismiss(dialog)
+    }
+
     private fun setupViewModel() {
         previewViewModel = obtainViewModel(PreviewViewModel::class.java)
     }
@@ -65,8 +83,7 @@ class PreviewDialog : DialogFragment() {
             success.observe(viewLifecycleOwner, Observer {
                 isSaved = !isSaved
                 setData()
-                dialog?.hide()
-                (requireActivity() as MainActivity).start()
+                isChanged = true
                 when (it) {
                     Action.Delete -> {
                         requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_wallpaper_deleted))
@@ -123,7 +140,7 @@ class PreviewDialog : DialogFragment() {
     }
 
     private fun setOnClickListener() {
-        binding.root.setOnClickListener { dialog?.hide() }
+        binding.root.setOnClickListener { dialog?.dismiss() }
         binding.btnSet.setOnClickListener { setWallpaper() }
         binding.btnSave.setOnClickListener {
             saveAction(
@@ -137,7 +154,7 @@ class PreviewDialog : DialogFragment() {
             )
         }
         binding.btnFullscreen.setOnClickListener {
-            requireContext().startPreviewActivity(
+            startPreviewActivity(
                 title = title,
                 creator = creator,
                 imageUrl = imageUrl,
@@ -167,7 +184,7 @@ class PreviewDialog : DialogFragment() {
             onResourceReady = {
                 setLoadingSet(false)
                 requireContext().setWallpaperDevice(it)
-                dialog?.hide()
+                dialog?.dismiss()
                 requireActivity().showSnackbarShort(getString(PREVIEW_R.string.message_success_set_wallpaper))
             },
             imageUrl = imageUrl

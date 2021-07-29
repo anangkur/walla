@@ -1,5 +1,6 @@
 package com.anangkur.wallpaper.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,9 @@ const val ARGS_TITLE = "title"
 const val ARGS_CREATOR = "creator"
 const val ARGS_IMAGE_URL = "imageUrl"
 const val ARGS_IS_SAVED = "isSaved"
+
+const val REQUEST_PREVIEW = 100
+const val RESULT_CHANGE_SAVED_STATE = 101
 
 private fun getFragment(className: String) = Class.forName(className).newInstance() as Fragment
 private fun getDialogFragment(className: String) = Class.forName(className).newInstance() as DialogFragment
@@ -40,18 +44,40 @@ fun getPreviewDialog(
     }
 }
 
-fun Context.startPreviewActivity(
+fun Activity.startPreviewActivity(
     id: String,
     title: String,
     creator: String,
     imageUrl: String,
     isSaved: Boolean
 ) {
-    startActivity(Intent(this, Class.forName(PREVIEW_ACTIVITY)).apply {
-        putExtra(ARGS_ID, id)
-        putExtra(ARGS_TITLE, title)
-        putExtra(ARGS_CREATOR, creator)
-        putExtra(ARGS_IMAGE_URL, imageUrl)
-        putExtra(ARGS_IS_SAVED, isSaved)
-    })
+    startActivityForResult(
+        Intent(this, Class.forName(PREVIEW_ACTIVITY)).apply {
+            putExtra(ARGS_ID, id)
+            putExtra(ARGS_TITLE, title)
+            putExtra(ARGS_CREATOR, creator)
+            putExtra(ARGS_IMAGE_URL, imageUrl)
+            putExtra(ARGS_IS_SAVED, isSaved)
+        },
+        REQUEST_PREVIEW
+    )
+}
+
+fun Fragment.startPreviewActivity(
+    id: String,
+    title: String,
+    creator: String,
+    imageUrl: String,
+    isSaved: Boolean
+) {
+    startActivityForResult(
+        Intent(requireContext(), Class.forName(PREVIEW_ACTIVITY)).apply {
+            putExtra(ARGS_ID, id)
+            putExtra(ARGS_TITLE, title)
+            putExtra(ARGS_CREATOR, creator)
+            putExtra(ARGS_IMAGE_URL, imageUrl)
+            putExtra(ARGS_IS_SAVED, isSaved)
+        },
+        REQUEST_PREVIEW
+    )
 }

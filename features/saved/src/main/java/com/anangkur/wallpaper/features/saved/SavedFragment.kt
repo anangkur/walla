@@ -1,5 +1,6 @@
 package com.anangkur.wallpaper.features.saved
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,10 @@ class SavedFragment : Fragment() {
         setupSwipeRefresh()
         setupSearch()
         savedViewModel.retrieveWallpaper()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun setupViewModel() {
@@ -82,15 +87,11 @@ class SavedFragment : Fragment() {
     private fun setupSearch() {
         binding.searchSaved.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    if (it.isNotEmpty())
-                        savedViewModel.searchWallpaper(it)
-                    else
-                        savedViewModel.retrieveWallpaper()
-                }
+                if (query.orEmpty().isNotEmpty()) savedViewModel.searchWallpaper(query.orEmpty())
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.orEmpty().isEmpty()) savedViewModel.retrieveWallpaper()
                 return true
             }
         })

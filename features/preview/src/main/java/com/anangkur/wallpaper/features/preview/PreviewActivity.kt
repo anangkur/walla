@@ -1,5 +1,6 @@
 package com.anangkur.wallpaper.features.preview
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,6 +21,7 @@ class PreviewActivity: AppCompatActivity() {
     private lateinit var creator: String
     private lateinit var imageUrl: String
     private var isSaved = false
+    private var isChanged = false
 
     private lateinit var previewViewModel: PreviewViewModel
 
@@ -38,6 +40,16 @@ class PreviewActivity: AppCompatActivity() {
         setBottomSheetExpand()
     }
 
+    override fun onBackPressed() {
+        if (isChanged) {
+            setResult(
+                RESULT_CHANGE_SAVED_STATE,
+                Intent().putExtra(ARGS_IS_SAVED, isSaved)
+            )
+        }
+        super.onBackPressed()
+    }
+
     private fun setupViewModel() {
         previewViewModel = obtainViewModel(PreviewViewModel::class.java)
     }
@@ -51,6 +63,7 @@ class PreviewActivity: AppCompatActivity() {
                 showSnackbarShort(it)
             })
             success.observe(this@PreviewActivity, Observer {
+                isChanged = true
                 when (it) {
                     PreviewViewModel.Companion.Action.Delete -> {
                         isSaved = !isSaved
