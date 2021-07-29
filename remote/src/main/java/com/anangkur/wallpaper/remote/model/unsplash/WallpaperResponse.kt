@@ -1,9 +1,12 @@
 package com.anangkur.wallpaper.remote.model.unsplash
 
 
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.google.gson.annotations.SerializedName
 
 data class WallpaperResponse(
+    @SerializedName("alt_description")
+    val altDescription: String?,
     @SerializedName("blur_hash")
     val blurHash: String?,
     @SerializedName("color")
@@ -32,4 +35,12 @@ data class WallpaperResponse(
     val user: User?,
     @SerializedName("width")
     val width: Int?
+)
+
+fun WallpaperResponse.toWallpaper() = Wallpaper(
+    id = id.orEmpty(),
+    creator = user?.name.orEmpty().ifEmpty { "-" },
+    imageUrl = urls?.full.orEmpty(),
+    isSaved = false,
+    title = description.orEmpty().ifEmpty { altDescription.orEmpty().ifEmpty { "-" } }
 )
