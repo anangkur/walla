@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anangkur.wallpaper.BuildConfig
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        homeViewModel.fetchWallpaper().observe(viewLifecycleOwner, Observer {
+        homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY).observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
                 Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
@@ -77,7 +78,8 @@ class HomeFragment : Fragment() {
                     title = it.title,
                     creator = it.creator,
                     imageUrl = it.imageUrl,
-                    isSaved = it.isSaved
+                    isSaved = it.isSaved,
+                    thumbnailUrl = it.thumbnailUrl
                 ).show(childFragmentManager, tag)
             }
         )

@@ -35,8 +35,8 @@ class Repository (
         factory.retrieveCacheDataStore().deleteWallpaper(id)
     }
 
-    suspend fun fetchWallpapers(): List<Wallpaper> {
-        return factory.retrieveRemoteDataStore().fetchWallpaper()
+    suspend fun fetchWallpapers(clientId: String): List<Wallpaper> {
+        return factory.retrieveRemoteDataStore().fetchWallpaper(clientId)
     }
 
     suspend fun fetchCollection(): List<Collection> {

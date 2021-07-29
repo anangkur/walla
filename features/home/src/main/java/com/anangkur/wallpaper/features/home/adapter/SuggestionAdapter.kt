@@ -13,7 +13,7 @@ class SuggestionAdapter(private val onClick: (Wallpaper) -> Unit) : RecyclerView
 
     inner class ViewHolder(private val binding: ItemSuggestionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Wallpaper) {
-            binding.ivSuggestion.setImageUrl(item.imageUrl)
+            binding.ivSuggestion.setImageUrl(item.thumbnailUrl)
             binding.root.setOnClickListener { onClick(item) }
         }
     }

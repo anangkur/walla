@@ -6,8 +6,8 @@ dependencies {
     implementation(project(':data'))
 
     implementation Deps.toolsKotlinJdk8
-    implementation Deps.retrofitConverterGson
-    implementation Deps.retrofit
-    implementation Deps.okhttp
-    implementation Deps.okhttpLoggingInterceptor
+    api Deps.retrofitConverterGson
+    api Deps.retrofit
+    api Deps.okhttp
+    api Deps.okhttpLoggingInterceptor
 }

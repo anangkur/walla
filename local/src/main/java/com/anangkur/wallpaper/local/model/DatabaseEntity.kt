@@ -22,7 +22,10 @@ data class DatabaseEntity(
     val imageUrl: String,
 
     @ColumnInfo(name = "isSaved")
-    val isSaved: Boolean
+    val isSaved: Boolean,
+
+    @ColumnInfo(name = "thumbnailUrl")
+    val thumbnailUrl: String
 )
 
 fun Wallpaper.toDatabaseEntity() = DatabaseEntity(
@@ -30,7 +33,8 @@ fun Wallpaper.toDatabaseEntity() = DatabaseEntity(
     creator = creator,
     imageUrl = imageUrl,
     id = id,
-    isSaved = isSaved
+    isSaved = isSaved,
+    thumbnailUrl = thumbnailUrl
 )
 
 fun DatabaseEntity.toWallpaper() = Wallpaper(
@@ -38,5 +42,6 @@ fun DatabaseEntity.toWallpaper() = Wallpaper(
     title = title,
     imageUrl = imageUrl,
     creator = creator,
-    isSaved = isSaved
+    isSaved = isSaved,
+    thumbnailUrl = thumbnailUrl
 )

@@ -18,6 +18,7 @@ const val ARGS_TITLE = "title"
 const val ARGS_CREATOR = "creator"
 const val ARGS_IMAGE_URL = "imageUrl"
 const val ARGS_IS_SAVED = "isSaved"
+const val ARGS_THUMBNAIL_URL = "thumbnailUrl"
 
 const val REQUEST_PREVIEW = 100
 const val RESULT_CHANGE_SAVED_STATE = 101
@@ -33,7 +34,8 @@ fun getPreviewDialog(
     title: String,
     creator: String,
     imageUrl: String,
-    isSaved: Boolean
+    isSaved: Boolean,
+    thumbnailUrl: String
 ) = getDialogFragment(PREVIEW_DIALOG_FRAGMENT).apply {
     arguments = Bundle().apply {
         putString(ARGS_ID, id)
@@ -41,6 +43,7 @@ fun getPreviewDialog(
         putString(ARGS_CREATOR, creator)
         putString(ARGS_IMAGE_URL, imageUrl)
         putBoolean(ARGS_IS_SAVED, isSaved)
+        putString(ARGS_THUMBNAIL_URL, thumbnailUrl)
     }
 }
 
@@ -49,7 +52,8 @@ fun Activity.startPreviewActivity(
     title: String,
     creator: String,
     imageUrl: String,
-    isSaved: Boolean
+    isSaved: Boolean,
+    thumbnailUrl: String
 ) {
     startActivityForResult(
         Intent(this, Class.forName(PREVIEW_ACTIVITY)).apply {
@@ -58,6 +62,7 @@ fun Activity.startPreviewActivity(
             putExtra(ARGS_CREATOR, creator)
             putExtra(ARGS_IMAGE_URL, imageUrl)
             putExtra(ARGS_IS_SAVED, isSaved)
+            putExtra(ARGS_THUMBNAIL_URL, thumbnailUrl)
         },
         REQUEST_PREVIEW
     )
@@ -68,7 +73,8 @@ fun Fragment.startPreviewActivity(
     title: String,
     creator: String,
     imageUrl: String,
-    isSaved: Boolean
+    isSaved: Boolean,
+    thumbnailUrl: String
 ) {
     startActivityForResult(
         Intent(requireContext(), Class.forName(PREVIEW_ACTIVITY)).apply {
@@ -77,6 +83,7 @@ fun Fragment.startPreviewActivity(
             putExtra(ARGS_CREATOR, creator)
             putExtra(ARGS_IMAGE_URL, imageUrl)
             putExtra(ARGS_IS_SAVED, isSaved)
+            putExtra(ARGS_THUMBNAIL_URL, thumbnailUrl)
         },
         REQUEST_PREVIEW
     )
