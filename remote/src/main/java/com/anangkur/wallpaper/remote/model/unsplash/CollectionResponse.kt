@@ -10,7 +10,7 @@ data class CollectionResponse(
     @SerializedName("description")
     val description: String?,
     @SerializedName("id")
-    val id: Int?,
+    val id: String?,
     @SerializedName("last_collected_at")
     val lastCollectedAt: String?,
     @SerializedName("links")
