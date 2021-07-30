@@ -15,7 +15,9 @@ class FavCollectionAdapter : RecyclerView.Adapter<FavCollectionAdapter.ViewHolde
         fun bind(item: Collection) {
             binding.tvTitle.text = item.title
             binding.tvSubTitle.text = item.description
-            binding.ivFavCollection.setImageUrl(item.imageUrl)
+            binding.ivFavCollection1.setImageUrl(item.wallpapers[0])
+            binding.ivFavCollection2.setImageUrl(item.wallpapers[1])
+            binding.ivFavCollection3.setImageUrl(item.wallpapers[2])
         }
     }
 

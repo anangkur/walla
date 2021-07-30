@@ -5,5 +5,5 @@ import com.anangkur.wallpaper.data.model.Wallpaper
 
 interface RemoteRepository {
     suspend fun fetchWallpaper(clientId: String): List<Wallpaper>
-    suspend fun fetchCollection(): List<Collection>
+    suspend fun fetchCollection(clientId: String): List<Collection>
 }

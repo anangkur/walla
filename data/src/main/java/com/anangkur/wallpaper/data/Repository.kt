@@ -39,8 +39,8 @@ class Repository (
         return factory.retrieveRemoteDataStore().fetchWallpaper(clientId)
     }
 
-    suspend fun fetchCollection(): List<Collection> {
-        return factory.retrieveRemoteDataStore().fetchCollection()
+    suspend fun fetchCollection(clientId: String): List<Collection> {
+        return factory.retrieveRemoteDataStore().fetchCollection(clientId)
     }
 
     suspend fun searchWallpaper(query: String): List<Wallpaper> {

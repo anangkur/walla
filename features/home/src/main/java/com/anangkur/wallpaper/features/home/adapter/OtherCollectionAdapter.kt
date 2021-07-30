@@ -15,7 +15,7 @@ class OtherCollectionAdapter : RecyclerView.Adapter<OtherCollectionAdapter.ViewH
         fun bind(item: Collection) {
             binding.tvTitle.text = item.title
             binding.tvSubTitle.text = item.description
-            binding.ivFavCollection.setImageUrl(item.imageUrl)
+            binding.ivFavCollection.setImageUrl(item.wallpapers[0])
         }
     }
 

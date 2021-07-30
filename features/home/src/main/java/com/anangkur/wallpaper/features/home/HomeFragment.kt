@@ -44,6 +44,7 @@ class HomeFragment : Fragment() {
         setupFavCollectionAdapter()
         setupOtherCollectionAdapter()
         observeViewModel()
+        homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -55,18 +56,29 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY).observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
-                Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
-                Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
-            }
-        })
+        homeViewModel.apply {
+            fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY).observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+                    Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
+                    Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
+                }
+            })
+            collections.observe(viewLifecycleOwner, Observer {
+                favCollectionAdapter.setItems(it)
+            })
+            loading.observe(viewLifecycleOwner, Observer {
+                binding.root.isRefreshing = it
+            })
+            error.observe(viewLifecycleOwner, Observer {
+                requireActivity().showSnackbarShort(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            })
+        }
     }
 
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
-            binding.root.isRefreshing = false
+            homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
         }
     }
 
