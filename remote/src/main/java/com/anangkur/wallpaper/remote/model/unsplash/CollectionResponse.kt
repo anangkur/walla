@@ -1,6 +1,7 @@
 package com.anangkur.wallpaper.remote.model.unsplash
 
 
+import com.anangkur.wallpaper.data.model.Collection
 import com.google.gson.annotations.SerializedName
 
 data class CollectionResponse(
@@ -27,5 +28,14 @@ data class CollectionResponse(
     @SerializedName("updated_at")
     val updatedAt: String?,
     @SerializedName("user")
-    val user: User?
+    val user: User?,
+    @SerializedName("preview_photos")
+    val previewPhotos: List<PreviewPhotos>
+)
+
+fun CollectionResponse.toCollection() = Collection(
+    id = id.toString(),
+    title = title.orEmpty(),
+    description = description.orEmpty(),
+    wallpapers = previewPhotos.map { it.urls.regular.orEmpty() }
 )
