@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
                 if (it.isEmpty()) setEmptyCollections() else setSuccessCollections(it)
             })
             otherCollections.observe(viewLifecycleOwner, Observer {
-                setSuccessOtherCollections(it)
+                if (it.isEmpty()) setEmptyOtherCollections() else setSuccessOtherCollections(it)
             })
             loadingCollections.observe(viewLifecycleOwner, Observer {
                 if (it) setLoadingCollections()
@@ -198,5 +198,12 @@ class HomeFragment : Fragment() {
     private fun setSuccessOtherCollections(otherCollections: List<Collection>) {
         binding.flipperOtherSuggestions.displayedChild = 0
         otherCollectionAdapter.setItems(otherCollections)
+    }
+
+    private fun setEmptyOtherCollections() {
+        binding.flipperOtherSuggestions.displayedChild = 2
+        binding.tvErrorOther.text = getString(APP_R.string.error_empty)
+        binding.ivErrorOther.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefreshOther.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10) }
     }
 }
