@@ -45,6 +45,7 @@ class HomeFragment : Fragment() {
         setupOtherCollectionAdapter()
         observeViewModel()
         homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
+        homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,6 +68,9 @@ class HomeFragment : Fragment() {
             collections.observe(viewLifecycleOwner, Observer {
                 favCollectionAdapter.setItems(it)
             })
+            collections.observe(viewLifecycleOwner, Observer {
+                otherCollectionAdapter.setItems(it)
+            })
             loading.observe(viewLifecycleOwner, Observer {
                 binding.root.isRefreshing = it
             })
@@ -79,6 +83,7 @@ class HomeFragment : Fragment() {
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
+            homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 3, 10)
         }
     }
 

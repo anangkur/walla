@@ -40,4 +40,21 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
             }
         }
     }
+
+    private val _otherCollections = MutableLiveData<List<Collection>>()
+    val otherCollections: LiveData<List<Collection>> = _otherCollections
+
+    fun fetchCollections(clientId: String, page: Int, perPage: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _loading.postValue(true)
+            repository.fetchCollections(clientId, page, perPage).runCatching {
+                _otherCollections.postValue(this)
+            }.onSuccess {
+                _loading.postValue(false)
+            }.onFailure {
+                _loading.postValue(false)
+                _error.postValue(it.message)
+            }
+        }
+    }
 }
