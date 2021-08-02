@@ -6,17 +6,37 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anangkur.wallpaper.data.Repository
 import com.anangkur.wallpaper.data.model.Collection
+import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.presentation.model.BaseResult
 import com.anangkur.wallpaper.presentation.resultLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: Repository): ViewModel() {
 
-    fun fetchWallpaper(clientId: String) = resultLiveData(
-        databaseQuery = { repository.retrieveWallpapers() },
-        networkCall = { repository.fetchWallpapers(clientId) },
-        saveCallResult = { data -> data.forEach { repository.insertWallpaper(it, false) } }
-    )
+    private val _suggestions = MutableLiveData<List<Wallpaper>>()
+    val suggestions: LiveData<List<Wallpaper>> = _suggestions
+
+    private val _loadingSuggestions = MutableLiveData<Boolean>()
+    val loadingSuggestions: LiveData<Boolean> = _loadingSuggestions
+
+    private val _errorSuggestions = MutableLiveData<String>()
+    val errorSuggestions: LiveData<String> = _errorSuggestions
+
+    fun fetchWallpaper(clientId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _loadingSuggestions.postValue(true)
+            runCatching {
+                repository.fetchWallpapers(clientId).forEach { repository.insertWallpaper(it, false) }
+                _suggestions.postValue(repository.retrieveWallpapers())
+            }.onSuccess {
+                _loadingSuggestions.postValue(false)
+            }.onFailure {
+                _loadingSuggestions.postValue(false)
+                _errorSuggestions.postValue(it.message)
+            }
+        }
+    }
 
     private val _collections = MutableLiveData<List<Collection>>()
     val collections: LiveData<List<Collection>> = _collections
@@ -30,8 +50,8 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     fun fetchCollections(clientId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
-            repository.fetchCollection(clientId).runCatching {
-                _collections.postValue(this)
+            runCatching {
+                _collections.postValue(repository.fetchCollection(clientId))
             }.onSuccess {
                 _loading.postValue(false)
             }.onFailure {
@@ -47,8 +67,8 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     fun fetchCollections(clientId: String, page: Int, perPage: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
-            repository.fetchCollections(clientId, page, perPage).runCatching {
-                _otherCollections.postValue(this)
+            runCatching {
+                _otherCollections.postValue(repository.fetchCollections(clientId, page, perPage))
             }.onSuccess {
                 _loading.postValue(false)
             }.onFailure {

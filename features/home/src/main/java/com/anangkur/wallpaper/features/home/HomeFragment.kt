@@ -1,6 +1,7 @@
 package com.anangkur.wallpaper.features.home
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.BuildConfig
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
@@ -44,6 +46,7 @@ class HomeFragment : Fragment() {
         setupFavCollectionAdapter()
         setupOtherCollectionAdapter()
         observeViewModel()
+        homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
         homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
         homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
     }
@@ -58,17 +61,19 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         homeViewModel.apply {
-            fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY).observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
-                    Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
-                    Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
-                }
+            suggestions.observe(viewLifecycleOwner, Observer {
+                setSuccessSuggestion(it)
+            })
+            errorSuggestions.observe(viewLifecycleOwner, Observer {
+                setErrorSuggestion(it)
+            })
+            loadingSuggestions.observe(viewLifecycleOwner, Observer {
+                if (it) setLoadingSuggestion()
             })
             collections.observe(viewLifecycleOwner, Observer {
                 favCollectionAdapter.setItems(it)
             })
-            collections.observe(viewLifecycleOwner, Observer {
+            otherCollections.observe(viewLifecycleOwner, Observer {
                 otherCollectionAdapter.setItems(it)
             })
             loading.observe(viewLifecycleOwner, Observer {
@@ -82,6 +87,7 @@ class HomeFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
+            homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 3, 10)
         }
@@ -123,5 +129,21 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
+    }
+
+    private fun setLoadingSuggestion() {
+        binding.flipperSuggestion.displayedChild = 1
+    }
+
+    private fun setErrorSuggestion(errorMessage: String) {
+        binding.flipperSuggestion.displayedChild = 2
+        binding.tvError.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefresh.setOnClickListener { homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setSuccessSuggestion(suggestions: List<Wallpaper>) {
+        binding.flipperSuggestion.displayedChild = 0
+        suggestionAdapter.setItems(suggestions)
     }
 }
