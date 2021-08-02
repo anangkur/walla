@@ -19,6 +19,7 @@ import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
 import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
+import com.anangkur.wallpaper.presentation.startCollectionsActivity
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
@@ -121,7 +122,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupFavCollectionAdapter() {
-        favCollectionAdapter = FavCollectionAdapter()
+        favCollectionAdapter = FavCollectionAdapter { id, title ->
+            requireContext().startCollectionsActivity(id, title)
+        }
         binding.recyclerFavoriteCollection.apply {
             adapter = favCollectionAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -130,7 +133,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupOtherCollectionAdapter() {
-        otherCollectionAdapter = OtherCollectionAdapter()
+        otherCollectionAdapter = OtherCollectionAdapter { id, title ->
+            requireContext().startCollectionsActivity(id, title)
+        }
         binding.recyclerOtherCollection.apply {
             adapter = otherCollectionAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

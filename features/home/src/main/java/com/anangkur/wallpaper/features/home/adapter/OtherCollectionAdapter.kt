@@ -7,7 +7,9 @@ import com.anangkur.wallpaper.features.home.databinding.ItemOtherCollectionBindi
 import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.utils.setImageUrl
 
-class OtherCollectionAdapter : RecyclerView.Adapter<OtherCollectionAdapter.ViewHolder>() {
+class OtherCollectionAdapter(
+    private val onClick: (id: String, title: String) -> Unit
+) : RecyclerView.Adapter<OtherCollectionAdapter.ViewHolder>() {
 
     private val items = ArrayList<Collection>()
 
@@ -16,6 +18,7 @@ class OtherCollectionAdapter : RecyclerView.Adapter<OtherCollectionAdapter.ViewH
             binding.tvTitle.text = item.title
             binding.tvSubTitle.text = item.description
             binding.ivFavCollection.setImageUrl(item.wallpapers[0])
+            binding.root.setOnClickListener { onClick(item.id, item.title) }
         }
     }
 

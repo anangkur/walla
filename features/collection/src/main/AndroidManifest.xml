@@ -8,4 +8,8 @@
         </dist:delivery>
         <dist:fusing dist:include="true" />
     </dist:module>
+
+    <application>
+        <activity android:name=".CollectionsActivity" />
+    </application>
 </manifest>
