@@ -41,22 +41,22 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     private val _collections = MutableLiveData<List<Collection>>()
     val collections: LiveData<List<Collection>> = _collections
 
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
+    private val _loadingCollections = MutableLiveData<Boolean>()
+    val loadingCollections: LiveData<Boolean> = _loadingCollections
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+    private val _errorCollections = MutableLiveData<String>()
+    val errorCollections: LiveData<String> = _errorCollections
 
     fun fetchCollections(clientId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _loading.postValue(true)
+            _loadingCollections.postValue(true)
             runCatching {
                 _collections.postValue(repository.fetchCollection(clientId))
             }.onSuccess {
-                _loading.postValue(false)
+                _loadingCollections.postValue(false)
             }.onFailure {
-                _loading.postValue(false)
-                _error.postValue(it.message)
+                _loadingCollections.postValue(false)
+                _errorCollections.postValue(it.message)
             }
         }
     }
@@ -64,16 +64,22 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     private val _otherCollections = MutableLiveData<List<Collection>>()
     val otherCollections: LiveData<List<Collection>> = _otherCollections
 
+    private val _loadingOtherCollections = MutableLiveData<Boolean>()
+    val loadingOtherCollections: LiveData<Boolean> = _loadingOtherCollections
+
+    private val _errorOtherCollections = MutableLiveData<String>()
+    val errorOtherCollections: LiveData<String> = _errorOtherCollections
+
     fun fetchCollections(clientId: String, page: Int, perPage: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _loading.postValue(true)
+            _loadingOtherCollections.postValue(true)
             runCatching {
                 _otherCollections.postValue(repository.fetchCollections(clientId, page, perPage))
             }.onSuccess {
-                _loading.postValue(false)
+                _loadingOtherCollections.postValue(false)
             }.onFailure {
-                _loading.postValue(false)
-                _error.postValue(it.message)
+                _loadingOtherCollections.postValue(false)
+                _errorOtherCollections.postValue(it.message)
             }
         }
     }

@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.BuildConfig
+import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
@@ -65,22 +66,22 @@ class HomeFragment : Fragment() {
                 setSuccessSuggestion(it)
             })
             errorSuggestions.observe(viewLifecycleOwner, Observer {
-                setErrorSuggestion(it)
+                setErrorSuggestion(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
             })
             loadingSuggestions.observe(viewLifecycleOwner, Observer {
                 if (it) setLoadingSuggestion()
             })
             collections.observe(viewLifecycleOwner, Observer {
-                favCollectionAdapter.setItems(it)
+                setSuccessCollections(it)
             })
             otherCollections.observe(viewLifecycleOwner, Observer {
                 otherCollectionAdapter.setItems(it)
             })
-            loading.observe(viewLifecycleOwner, Observer {
-                binding.root.isRefreshing = it
+            loadingCollections.observe(viewLifecycleOwner, Observer {
+                if (it) setLoadingCollections()
             })
-            error.observe(viewLifecycleOwner, Observer {
-                requireActivity().showSnackbarShort(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            errorCollections.observe(viewLifecycleOwner, Observer {
+                setErrorCollections(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
             })
         }
     }
@@ -145,5 +146,21 @@ class HomeFragment : Fragment() {
     private fun setSuccessSuggestion(suggestions: List<Wallpaper>) {
         binding.flipperSuggestion.displayedChild = 0
         suggestionAdapter.setItems(suggestions)
+    }
+
+    private fun setLoadingCollections() {
+        binding.flipperFavorite.displayedChild = 1
+    }
+
+    private fun setErrorCollections(errorMessage: String) {
+        binding.flipperFavorite.displayedChild = 2
+        binding.tvErrorFav.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefreshFav.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setSuccessCollections(collections: List<Collection>) {
+        binding.flipperFavorite.displayedChild = 0
+        favCollectionAdapter.setItems(collections)
     }
 }
