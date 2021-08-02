@@ -177,9 +177,9 @@ class PreviewDialog : DialogFragment() {
     }
 
     private fun setWallpaper() {
+        setLoadingSet(true)
         requireContext().downloadBitmap(
             onLoading = {
-                setLoadingSet(true)
             },
             onFailed = {
                 setLoadingSet(false)
