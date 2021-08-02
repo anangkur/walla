@@ -32,7 +32,8 @@ android {
             ':features:home',
             ':features:search',
             ':features:saved',
-            ':features:preview'
+            ':features:preview',
+            ':features:collection'
     ]
 }
 

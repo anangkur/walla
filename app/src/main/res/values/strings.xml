@@ -24,4 +24,5 @@
     <string name="title_search">Search</string>
     <string name="title_saved">Saved</string>
     <string name="title_preview">Preview</string>
+    <string name="title_collection">Collection</string>
 </resources>
