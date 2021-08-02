@@ -20,11 +20,11 @@ class CollectionViewModel(private val repository: Repository) : ViewModel() {
     private val _collectionPhotos = MutableLiveData<List<Wallpaper>>()
     val collectionPhotos: LiveData<List<Wallpaper>> = _collectionPhotos
 
-    fun fetchCollectionPhotos(clientId: String) {
+    fun fetchCollectionPhotos(clientId: String, collectionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _loadingCollectionPhotos.postValue(true)
             runCatching {
-                _collectionPhotos.postValue(repository.fetchCollectionPhotos(clientId))
+                _collectionPhotos.postValue(repository.fetchCollectionPhotos(clientId, collectionId))
             }.onSuccess {
                 _loadingCollectionPhotos.postValue(false)
             }.onFailure {

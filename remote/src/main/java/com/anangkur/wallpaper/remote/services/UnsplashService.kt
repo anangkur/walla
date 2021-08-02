@@ -3,6 +3,7 @@ package com.anangkur.wallpaper.remote.services
 import com.anangkur.wallpaper.remote.model.unsplash.CollectionResponse
 import com.anangkur.wallpaper.remote.model.unsplash.WallpaperResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface UnsplashService {
@@ -18,5 +19,8 @@ interface UnsplashService {
     ): List<CollectionResponse>
 
     @GET("/collections/{id}/photos")
-    suspend fun getCollectionPhotos(@Query("client_id") clientId: String): List<WallpaperResponse>
+    suspend fun getCollectionPhotos(
+        @Query("client_id") clientId: String,
+        @Path("id") collectionId: String
+    ): List<WallpaperResponse>
 }
