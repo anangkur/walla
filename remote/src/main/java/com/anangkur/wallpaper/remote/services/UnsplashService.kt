@@ -20,7 +20,7 @@ interface UnsplashService {
 
     @GET("/collections/{id}/photos")
     suspend fun getCollectionPhotos(
-        @Query("client_id") clientId: String,
-        @Path("id") collectionId: String
+        @Path("id") collectionId: String,
+        @Query("client_id") clientId: String
     ): List<WallpaperResponse>
 }
