@@ -21,15 +21,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_saved"
+        <ViewFlipper
+            android:id="@+id/flipper_saved"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_saved"/>
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_saved"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="20dp"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_saved"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:progressBarStyleSmall"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/btn_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?selectableItemBackground">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_refresh"
+                    android:layout_centerInParent="true"/>
+                <TextView
+                    android:id="@+id/tv_error_saved"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:textAlignment="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/btn_refresh"/>
+            </RelativeLayout>
+        </ViewFlipper>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
