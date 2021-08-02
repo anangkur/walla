@@ -51,4 +51,8 @@ class Repository (
         return factory.retrieveRemoteDataStore().fetchCollections(clientId, page, perPage)
     }
 
+    suspend fun fetchCollectionPhotos(clientId: String, collectionId: String): List<Wallpaper> {
+        return factory.retrieveRemoteDataStore().fetchCollectionPhotos(clientId, collectionId)
+    }
+
 }

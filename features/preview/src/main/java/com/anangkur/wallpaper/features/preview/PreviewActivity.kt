@@ -141,9 +141,9 @@ class PreviewActivity: AppCompatActivity() {
     }
 
     private fun setWallpaper() {
+        setLoadingSet(true)
         downloadBitmap(
             onLoading = {
-                setLoadingSet(true)
             },
             onFailed = {
                 setLoadingSet(false)

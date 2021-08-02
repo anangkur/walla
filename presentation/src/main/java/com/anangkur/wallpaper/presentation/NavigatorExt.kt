@@ -12,6 +12,7 @@ private const val SEARCH_FRAGMENT = "com.anangkur.wallpaper.features.search.Sear
 private const val SAVED_FRAGMENT = "com.anangkur.wallpaper.features.saved.SavedFragment"
 private const val PREVIEW_DIALOG_FRAGMENT = "com.anangkur.wallpaper.features.preview.PreviewDialog"
 private const val PREVIEW_ACTIVITY = "com.anangkur.wallpaper.features.preview.PreviewActivity"
+private const val COLLECTIONS_ACTIVITY = "com.anangkur.wallpaper.features.collection.CollectionsActivity"
 
 const val ARGS_ID = "id"
 const val ARGS_TITLE = "title"
@@ -87,4 +88,11 @@ fun Fragment.startPreviewActivity(
         },
         REQUEST_PREVIEW
     )
+}
+
+fun Context.startCollectionsActivity(id: String, title: String) {
+    startActivity(Intent(this, Class.forName(COLLECTIONS_ACTIVITY)).apply {
+        putExtra(ARGS_ID, id)
+        putExtra(ARGS_TITLE, title)
+    })
 }

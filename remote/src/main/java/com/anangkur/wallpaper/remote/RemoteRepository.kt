@@ -25,4 +25,11 @@ class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepo
     override suspend fun fetchCollections(clientId: String, page: Int, perPage: Int): List<Collection> {
         return unsplashService.getCollections(clientId, page, perPage).map { it.toCollection() }
     }
+
+    override suspend fun fetchCollectionPhotos(clientId: String, collectionId: String): List<Wallpaper> {
+        return unsplashService.getCollectionPhotos(
+            clientId = clientId,
+            collectionId = collectionId
+        ).map { it.toWallpaper() }
+    }
 }

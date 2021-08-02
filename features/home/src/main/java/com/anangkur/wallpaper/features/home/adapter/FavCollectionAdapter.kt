@@ -7,7 +7,9 @@ import com.anangkur.wallpaper.features.home.databinding.ItemFavCollectionBinding
 import com.anangkur.wallpaper.data.model.Collection
 import com.anangkur.wallpaper.utils.setImageUrl
 
-class FavCollectionAdapter : RecyclerView.Adapter<FavCollectionAdapter.ViewHolder>() {
+class FavCollectionAdapter(
+    private val onClick: (id: String, title: String) -> Unit
+) : RecyclerView.Adapter<FavCollectionAdapter.ViewHolder>() {
 
     private val items = ArrayList<Collection>()
 
@@ -18,6 +20,7 @@ class FavCollectionAdapter : RecyclerView.Adapter<FavCollectionAdapter.ViewHolde
             binding.ivFavCollection1.setImageUrl(item.wallpapers[0])
             binding.ivFavCollection2.setImageUrl(item.wallpapers[1])
             binding.ivFavCollection3.setImageUrl(item.wallpapers[2])
+            binding.root.setOnClickListener { onClick(item.id, item.title) }
         }
     }
 

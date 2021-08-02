@@ -65,7 +65,11 @@ class PreviewDialog : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        if (isChanged) (requireActivity() as MainActivity).start()
+        if (isChanged) {
+            if (requireActivity() is MainActivity) {
+                (requireActivity() as MainActivity).start()
+            }
+        }
         else super.onDismiss(dialog)
     }
 
@@ -177,9 +181,9 @@ class PreviewDialog : DialogFragment() {
     }
 
     private fun setWallpaper() {
+        setLoadingSet(true)
         requireContext().downloadBitmap(
             onLoading = {
-                setLoadingSet(true)
             },
             onFailed = {
                 setLoadingSet(false)
