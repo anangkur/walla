@@ -95,6 +95,7 @@ class HomeFragment : Fragment() {
             homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
+            binding.root.isRefreshing = false
         }
     }
 
