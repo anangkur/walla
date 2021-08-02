@@ -1,6 +1,7 @@
 package com.anangkur.wallpaper.features.home
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +62,7 @@ class HomeFragment : Fragment() {
     private fun observeViewModel() {
         homeViewModel.apply {
             suggestions.observe(viewLifecycleOwner, Observer {
-                setSuccessSuggestion(it)
+                if (it.isEmpty()) setEmptySuggestion() else setSuccessSuggestion(it)
             })
             errorSuggestions.observe(viewLifecycleOwner, Observer {
                 setErrorSuggestion(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
@@ -70,7 +71,7 @@ class HomeFragment : Fragment() {
                 if (it) setLoadingSuggestion()
             })
             collections.observe(viewLifecycleOwner, Observer {
-                setSuccessCollections(it)
+                if (it.isEmpty()) setEmptyCollections() else setSuccessCollections(it)
             })
             otherCollections.observe(viewLifecycleOwner, Observer {
                 setSuccessOtherCollections(it)
@@ -153,6 +154,13 @@ class HomeFragment : Fragment() {
         suggestionAdapter.setItems(suggestions)
     }
 
+    private fun setEmptySuggestion() {
+        binding.flipperSuggestion.displayedChild = 2
+        binding.tvError.text = getString(APP_R.string.error_empty)
+        binding.ivError.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefresh.setOnClickListener { homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
     private fun setLoadingCollections() {
         binding.flipperFavorite.displayedChild = 1
     }
@@ -167,6 +175,13 @@ class HomeFragment : Fragment() {
     private fun setSuccessCollections(collections: List<Collection>) {
         binding.flipperFavorite.displayedChild = 0
         favCollectionAdapter.setItems(collections)
+    }
+
+    private fun setEmptyCollections() {
+        binding.flipperFavorite.displayedChild = 2
+        binding.tvErrorFav.text = getString(APP_R.string.error_empty)
+        binding.ivErrorFav.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefreshFav.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY) }
     }
 
     private fun setLoadingOtherCollections() {
