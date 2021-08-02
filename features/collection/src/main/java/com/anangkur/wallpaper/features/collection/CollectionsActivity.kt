@@ -122,7 +122,7 @@ class CollectionsActivity : AppCompatActivity() {
 
     private fun setupSwipeRefresh() {
         binding.swipeCollection.setOnRefreshListener {
-            collectionViewModel.fetchCollectionPhotos(BuildConfig.UNSPLASH_ACCESS_KEY, id)
+            collectionViewModel.fetchCollectionPhotos(clientId = BuildConfig.UNSPLASH_ACCESS_KEY, collectionId = id)
             binding.swipeCollection.isRefreshing = false
         }
     }

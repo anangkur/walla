@@ -34,7 +34,7 @@ data class CollectionResponse(
 )
 
 fun CollectionResponse.toCollection() = Collection(
-    id = id.toString(),
+    id = id.orEmpty(),
     title = title.orEmpty(),
     description = description.orEmpty(),
     wallpapers = previewPhotos.map { it.urls.regular.orEmpty() }
