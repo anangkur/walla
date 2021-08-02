@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
                 setErrorCollections(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
             })
             loadingOtherCollections.observe(viewLifecycleOwner, Observer {
-                setLoadingOtherCollections()
+                if (it) setLoadingOtherCollections()
             })
             errorOtherCollections.observe(viewLifecycleOwner, Observer {
                 setErrorOtherCollections(it.ifEmpty { getString(APP_R.string.error_default) })
