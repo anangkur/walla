@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.saved.databinding.FragmentSavedBinding
 import com.anangkur.wallpaper.presentation.features.saved.SavedViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
+import com.anangkur.wallpaper.R as APP_R
 
 class SavedFragment : Fragment() {
 
@@ -50,13 +52,13 @@ class SavedFragment : Fragment() {
     private fun observeViewModel() {
         savedViewModel.apply {
             wallpapers.observe(viewLifecycleOwner, Observer {
-                savedAdapter.setItems(it)
+                if (it.isEmpty()) setEmptySaved() else setSuccessSaved(it)
             })
             loading.observe(viewLifecycleOwner, Observer {
-                binding.swipeSaved.isRefreshing = it
+                if (it) setLoadingSaved()
             })
             error.observe(viewLifecycleOwner, Observer {
-                requireActivity().showSnackbarShort(it)
+                setErrorSaved(it.ifEmpty { getString(APP_R.string.error_default) })
             })
         }
     }
@@ -82,6 +84,7 @@ class SavedFragment : Fragment() {
     private fun setupSwipeRefresh() {
         binding.swipeSaved.setOnRefreshListener {
             savedViewModel.retrieveWallpaper()
+            binding.swipeSaved.isRefreshing = false
         }
     }
 
@@ -96,5 +99,28 @@ class SavedFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun setLoadingSaved() {
+        binding.flipperSaved.displayedChild = 1
+    }
+
+    private fun setErrorSaved(errorMessage: String) {
+        binding.flipperSaved.displayedChild = 2
+        binding.tvErrorSaved.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefresh.setOnClickListener { savedViewModel.retrieveWallpaper() }
+    }
+
+    private fun setSuccessSaved(wallpapers: List<Wallpaper>) {
+        binding.flipperSaved.displayedChild = 0
+        savedAdapter.setItems(wallpapers)
+    }
+
+    private fun setEmptySaved() {
+        binding.flipperSaved.displayedChild = 2
+        binding.tvErrorSaved.text = getString(APP_R.string.error_empty)
+        binding.ivRefresh.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefresh.setOnClickListener { savedViewModel.retrieveWallpaper() }
     }
 }

@@ -1,6 +1,7 @@
 package com.anangkur.wallpaper.features.home
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.BuildConfig
+import com.anangkur.wallpaper.data.model.Collection
+import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
 import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
-import com.anangkur.wallpaper.presentation.model.BaseResult.Companion.Status
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
@@ -44,7 +46,9 @@ class HomeFragment : Fragment() {
         setupFavCollectionAdapter()
         setupOtherCollectionAdapter()
         observeViewModel()
+        homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
         homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
+        homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,28 +61,42 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         homeViewModel.apply {
-            fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY).observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    Status.Error -> requireActivity().showSnackbarShort(it.message.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
-                    Status.Loading -> binding.root.isRefreshing = it.isLoading ?: false
-                    Status.Success -> suggestionAdapter.setItems(it.data.orEmpty())
-                }
+            suggestions.observe(viewLifecycleOwner, Observer {
+                if (it.isEmpty()) setEmptySuggestion() else setSuccessSuggestion(it)
+            })
+            errorSuggestions.observe(viewLifecycleOwner, Observer {
+                setErrorSuggestion(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            })
+            loadingSuggestions.observe(viewLifecycleOwner, Observer {
+                if (it) setLoadingSuggestion()
             })
             collections.observe(viewLifecycleOwner, Observer {
-                favCollectionAdapter.setItems(it)
+                if (it.isEmpty()) setEmptyCollections() else setSuccessCollections(it)
             })
-            loading.observe(viewLifecycleOwner, Observer {
-                binding.root.isRefreshing = it
+            otherCollections.observe(viewLifecycleOwner, Observer {
+                if (it.isEmpty()) setEmptyOtherCollections() else setSuccessOtherCollections(it)
             })
-            error.observe(viewLifecycleOwner, Observer {
-                requireActivity().showSnackbarShort(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            loadingCollections.observe(viewLifecycleOwner, Observer {
+                if (it) setLoadingCollections()
+            })
+            errorCollections.observe(viewLifecycleOwner, Observer {
+                setErrorCollections(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            })
+            loadingOtherCollections.observe(viewLifecycleOwner, Observer {
+                if (it) setLoadingOtherCollections()
+            })
+            errorOtherCollections.observe(viewLifecycleOwner, Observer {
+                setErrorOtherCollections(it.ifEmpty { getString(APP_R.string.error_default) })
             })
         }
     }
 
     private fun setupSwipeRefresh() {
         binding.root.setOnRefreshListener {
+            homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
+            homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
+            binding.root.isRefreshing = false
         }
     }
 
@@ -118,5 +136,74 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
+    }
+
+    private fun setLoadingSuggestion() {
+        binding.flipperSuggestion.displayedChild = 1
+    }
+
+    private fun setErrorSuggestion(errorMessage: String) {
+        binding.flipperSuggestion.displayedChild = 2
+        binding.tvError.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefresh.setOnClickListener { homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setSuccessSuggestion(suggestions: List<Wallpaper>) {
+        binding.flipperSuggestion.displayedChild = 0
+        suggestionAdapter.setItems(suggestions)
+    }
+
+    private fun setEmptySuggestion() {
+        binding.flipperSuggestion.displayedChild = 2
+        binding.tvError.text = getString(APP_R.string.error_empty)
+        binding.ivError.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefresh.setOnClickListener { homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setLoadingCollections() {
+        binding.flipperFavorite.displayedChild = 1
+    }
+
+    private fun setErrorCollections(errorMessage: String) {
+        binding.flipperFavorite.displayedChild = 2
+        binding.tvErrorFav.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefreshFav.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setSuccessCollections(collections: List<Collection>) {
+        binding.flipperFavorite.displayedChild = 0
+        favCollectionAdapter.setItems(collections)
+    }
+
+    private fun setEmptyCollections() {
+        binding.flipperFavorite.displayedChild = 2
+        binding.tvErrorFav.text = getString(APP_R.string.error_empty)
+        binding.ivErrorFav.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefreshFav.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY) }
+    }
+
+    private fun setLoadingOtherCollections() {
+        binding.flipperOtherSuggestions.displayedChild = 1
+    }
+
+    private fun setErrorOtherCollections(errorMessage: String) {
+        binding.flipperOtherSuggestions.displayedChild = 2
+        binding.tvErrorOther.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefreshOther.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10) }
+    }
+
+    private fun setSuccessOtherCollections(otherCollections: List<Collection>) {
+        binding.flipperOtherSuggestions.displayedChild = 0
+        otherCollectionAdapter.setItems(otherCollections)
+    }
+
+    private fun setEmptyOtherCollections() {
+        binding.flipperOtherSuggestions.displayedChild = 2
+        binding.tvErrorOther.text = getString(APP_R.string.error_empty)
+        binding.ivErrorOther.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefreshOther.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10) }
     }
 }

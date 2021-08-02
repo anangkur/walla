@@ -15,7 +15,8 @@
 
     <string name="menu_open_in_browser">Buka di browser</string>
 
-    <string name="error_default">Terjadi kesalahan</string>
+    <string name="error_default">Something happens</string>
+    <string name="error_empty">No data</string>
 
     <string name="title_news">feature-news</string>
     <string name="title_wallpaper">feature-wallpaper</string>
