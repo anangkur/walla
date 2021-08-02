@@ -16,4 +16,7 @@ interface UnsplashService {
         @Query("page") page: Int = 1,
         @Query("per_page") perPage: Int = 10
     ): List<CollectionResponse>
+
+    @GET("/collections/{id}/photos")
+    suspend fun getCollectionPhotos(@Query("client_id") clientId: String): List<WallpaperResponse>
 }
