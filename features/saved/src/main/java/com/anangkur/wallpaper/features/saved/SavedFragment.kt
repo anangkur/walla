@@ -52,7 +52,7 @@ class SavedFragment : Fragment() {
     private fun observeViewModel() {
         savedViewModel.apply {
             wallpapers.observe(viewLifecycleOwner, Observer {
-                setSuccessSaved(it)
+                if (it.isEmpty()) setEmptySaved() else setSuccessSaved(it)
             })
             loading.observe(viewLifecycleOwner, Observer {
                 if (it) setLoadingSaved()
@@ -115,5 +115,12 @@ class SavedFragment : Fragment() {
     private fun setSuccessSaved(wallpapers: List<Wallpaper>) {
         binding.flipperSaved.displayedChild = 0
         savedAdapter.setItems(wallpapers)
+    }
+
+    private fun setEmptySaved() {
+        binding.flipperSaved.displayedChild = 2
+        binding.tvErrorSaved.text = getString(APP_R.string.error_empty)
+        binding.ivRefresh.setImageResource(APP_R.drawable.ic_problem)
+        binding.btnRefresh.setOnClickListener { savedViewModel.retrieveWallpaper() }
     }
 }
