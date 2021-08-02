@@ -1,7 +1,6 @@
 package com.anangkur.wallpaper.features.home
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
 import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
-import com.anangkur.wallpaper.presentation.model.BaseResult.Companion.Status
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
@@ -75,13 +73,19 @@ class HomeFragment : Fragment() {
                 setSuccessCollections(it)
             })
             otherCollections.observe(viewLifecycleOwner, Observer {
-                otherCollectionAdapter.setItems(it)
+                setSuccessOtherCollections(it)
             })
             loadingCollections.observe(viewLifecycleOwner, Observer {
                 if (it) setLoadingCollections()
             })
             errorCollections.observe(viewLifecycleOwner, Observer {
                 setErrorCollections(it.orEmpty().ifEmpty { getString(APP_R.string.error_default) })
+            })
+            loadingOtherCollections.observe(viewLifecycleOwner, Observer {
+                setLoadingOtherCollections()
+            })
+            errorOtherCollections.observe(viewLifecycleOwner, Observer {
+                setErrorOtherCollections(it.ifEmpty { getString(APP_R.string.error_default) })
             })
         }
     }
@@ -90,7 +94,7 @@ class HomeFragment : Fragment() {
         binding.root.setOnRefreshListener {
             homeViewModel.fetchWallpaper(BuildConfig.UNSPLASH_ACCESS_KEY)
             homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY)
-            homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 3, 10)
+            homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10)
         }
     }
 
@@ -162,5 +166,21 @@ class HomeFragment : Fragment() {
     private fun setSuccessCollections(collections: List<Collection>) {
         binding.flipperFavorite.displayedChild = 0
         favCollectionAdapter.setItems(collections)
+    }
+
+    private fun setLoadingOtherCollections() {
+        binding.flipperOtherSuggestions.displayedChild = 1
+    }
+
+    private fun setErrorOtherCollections(errorMessage: String) {
+        binding.flipperOtherSuggestions.displayedChild = 2
+        binding.tvErrorOther.text = errorMessage
+        requireActivity().showSnackbarShort(errorMessage)
+        binding.btnRefreshOther.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10) }
+    }
+
+    private fun setSuccessOtherCollections(otherCollections: List<Collection>) {
+        binding.flipperOtherSuggestions.displayedChild = 0
+        otherCollectionAdapter.setItems(otherCollections)
     }
 }
