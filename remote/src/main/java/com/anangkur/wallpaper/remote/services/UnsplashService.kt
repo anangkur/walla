@@ -1,6 +1,7 @@
 package com.anangkur.wallpaper.remote.services
 
 import com.anangkur.wallpaper.remote.model.unsplash.CollectionResponse
+import com.anangkur.wallpaper.remote.model.unsplash.SearchResult
 import com.anangkur.wallpaper.remote.model.unsplash.WallpaperResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,11 @@ interface UnsplashService {
         @Path("id") collectionId: String,
         @Query("client_id") clientId: String
     ): List<WallpaperResponse>
+
+    @GET("/search/photos")
+    suspend fun getSearchPhotos(
+        @Query("client_id") clientId: String,
+        @Query("query") query: String = "",
+        @Query("color") color: String? = null
+    ): SearchResult
 }
