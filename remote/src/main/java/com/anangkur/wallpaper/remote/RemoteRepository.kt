@@ -32,4 +32,18 @@ class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepo
             collectionId = collectionId
         ).map { it.toWallpaper() }
     }
+
+    override suspend fun fetchSearchPhotosByColor(clientId: String, color: String): List<Wallpaper> {
+        return unsplashService.getSearchPhotos(
+            clientId = clientId,
+            color = color
+        ).map { it.toWallpaper() }
+    }
+
+    override suspend fun fetchSearchPhotosByQuery(clientId: String, query: String): List<Wallpaper> {
+        return unsplashService.getSearchPhotos(
+            clientId = clientId,
+            query = query
+        ).map { it.toWallpaper() }
+    }
 }
