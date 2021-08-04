@@ -91,7 +91,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Anang Kurniawan - [@anang_kur](https://twitter.com/anang_kur) - anangk97@gmail.com
 
 ## Special Thanks
-* Beautiful design by Setyono Dwi Cahyo - [Twitter](https://twitter.com/setyonodwi) - [Instagram](https://instagram.com/setyonodwi)
+* Beautiful design by Setyono Dwi Utomo - [Twitter](https://twitter.com/setyonodwi) - [Instagram](https://instagram.com/setyonodwi)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
