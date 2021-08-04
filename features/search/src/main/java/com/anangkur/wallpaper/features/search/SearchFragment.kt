@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.anangkur.wallpaper.feature.search.R
 import com.anangkur.wallpaper.feature.search.databinding.FragmentSearchBinding
 import com.anangkur.wallpaper.presentation.startSearchResultActivity
+import com.anangkur.wallpaper.utils.gone
 
 class SearchFragment : Fragment() {
 
@@ -38,7 +39,9 @@ class SearchFragment : Fragment() {
             adapter = colorSelectorAdapter
             itemAnimator = DefaultItemAnimator()
             layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+            visibility = View.GONE
         }
+        binding.tvTitleColorSelector.gone()
     }
 
     private fun setupColorSelectorData() {
