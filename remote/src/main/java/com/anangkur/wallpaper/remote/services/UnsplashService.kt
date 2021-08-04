@@ -23,4 +23,11 @@ interface UnsplashService {
         @Path("id") collectionId: String,
         @Query("client_id") clientId: String
     ): List<WallpaperResponse>
+
+    @GET("/search/photos")
+    suspend fun getSearchPhotos(
+        @Query("client_id") clientId: String,
+        @Query("query") query: String? = null,
+        @Query("color") color: String? = null
+    ): List<WallpaperResponse>
 }
