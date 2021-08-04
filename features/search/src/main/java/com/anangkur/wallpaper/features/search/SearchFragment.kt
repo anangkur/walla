@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anangkur.wallpaper.feature.search.R
 import com.anangkur.wallpaper.feature.search.databinding.FragmentSearchBinding
+import com.anangkur.wallpaper.presentation.startSearchResultActivity
 
 class SearchFragment : Fragment() {
 
@@ -25,10 +26,14 @@ class SearchFragment : Fragment() {
 
         setupColorSelectorAdapter()
         setupColorSelectorData()
+
+        binding.viewBgSearch.setOnClickListener { requireContext().startSearchResultActivity(null) }
     }
 
     private fun setupColorSelectorAdapter() {
-        colorSelectorAdapter = ColorSelectorAdapter()
+        colorSelectorAdapter = ColorSelectorAdapter {
+            requireContext().startSearchResultActivity(it)
+        }
         binding.recyclerColorSelector.apply {
             adapter = colorSelectorAdapter
             itemAnimator = DefaultItemAnimator()

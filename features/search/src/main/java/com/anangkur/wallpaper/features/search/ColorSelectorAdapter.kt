@@ -6,13 +6,16 @@ import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.wallpaper.feature.search.databinding.ItemColorSelectorBinding
 
-class ColorSelectorAdapter : RecyclerView.Adapter<ColorSelectorAdapter.ViewHolder>() {
+class ColorSelectorAdapter(
+    private val onClick: (color: Int) -> Unit
+) : RecyclerView.Adapter<ColorSelectorAdapter.ViewHolder>() {
 
     private val items = ArrayList<@ColorRes Int>()
 
     inner class ViewHolder(private val binding: ItemColorSelectorBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Int) {
             binding.root.setCardBackgroundColor(item)
+            binding.root.setOnClickListener { onClick(item) }
         }
     }
 
