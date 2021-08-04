@@ -32,6 +32,29 @@
   </p>
 </p>
 
+<p align="center">
+    <table>
+      <tr>
+        <td><img src="images/home.png" alt="Home"></td>
+        <td><img src="images/preview.png" alt="Preview"></td>
+        <td><img src="images/preview-large.png" alt="Preview Large"></td>
+      </tr>
+      <tr>
+        <td align="center">Home</td>
+        <td align="center">Preview</td>
+        <td align="center">Preview Large</td>
+      </tr>
+      <tr>
+        <td><img src="images/saved.png" alt="Saved"></td>
+        <td><img src="images/search.png" alt="Search"></td>
+      </tr>
+      <tr>
+        <td align="center">Detail</td>
+        <td align="center">Search</td>
+      </tr>
+    </table>
+</p>
+
 ## Built With
 * [Kotlin](https://kotlinlang.org/)
 * [Androidx](https://developer.android.com/jetpack/androidx)
