@@ -30,6 +30,12 @@
   <p align="center">
     Open source wallpaper app for mobile phone.
   </p>
+  
+  <p align="center">
+    <a href="https://play.google.com/store/apps/details?id=com.anangkur.wallpaper">
+      <img src="https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=green&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Dcom.anangkur.wallpaper%26l%3DPlayStore%26m%3D%24version">
+    </a>
+  </p>
 </p>
 
 <p align="center">
@@ -91,7 +97,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Anang Kurniawan - [@anang_kur](https://twitter.com/anang_kur) - anangk97@gmail.com
 
 ## Special Thanks
-* Beautiful design by Setyono Dwi Cahyo - [Twitter](https://twitter.com/setyonodwi) - [Instagram](https://instagram.com/setyonodwi)
+* Beautiful design by Setyono Dwi Utomo - [Twitter](https://twitter.com/setyonodwi) - [Instagram](https://instagram.com/setyonodwi)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
