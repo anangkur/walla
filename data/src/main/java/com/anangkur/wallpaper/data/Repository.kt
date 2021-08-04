@@ -55,4 +55,12 @@ class Repository (
         return factory.retrieveRemoteDataStore().fetchCollectionPhotos(clientId, collectionId)
     }
 
+    suspend fun fetchSearchByQuery(clientId: String, query: String): List<Wallpaper> {
+        return factory.retrieveRemoteDataStore().fetchSearchPhotosByQuery(clientId, query)
+    }
+
+    suspend fun fetchSearchByColor(clientId: String, color: String): List<Wallpaper> {
+        return factory.retrieveRemoteDataStore().fetchSearchPhotosByColor(clientId, color)
+    }
+
 }
