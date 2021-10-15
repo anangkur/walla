@@ -98,6 +98,7 @@ Anang Kurniawan - [@anang_kur](https://twitter.com/anang_kur) - anangk97@gmail.c
 
 ## Special Thanks
 * Beautiful design by Setyono Dwi Utomo - [Twitter](https://twitter.com/setyonodwi) - [Instagram](https://instagram.com/setyonodwi)
+* Image resources from [unsplash](https://unsplash.com/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
