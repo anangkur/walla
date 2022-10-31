@@ -10,7 +10,7 @@ class ColorSelectorAdapter(
     private val onClick: (color: Int) -> Unit
 ) : RecyclerView.Adapter<ColorSelectorAdapter.ViewHolder>() {
 
-    private val items = ArrayList<@ColorRes Int>()
+    private val items = ArrayList<@receiver:ColorRes Int>()
 
     inner class ViewHolder(private val binding: ItemColorSelectorBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Int) {

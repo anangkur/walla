@@ -2,8 +2,8 @@ import org.gradle.api.JavaVersion
 
 object Config {
     const val minSdk = 21
-    const val compileSdk = 30
-    const val targetSdk = 30
+    const val compileSdk = 33
+    const val targetSdk = 33
     val javaVersion = JavaVersion.VERSION_1_8
     const val buildTools = "30.0.3"
     const val versionCode = 100
@@ -14,8 +14,8 @@ object Versions {
     const val javaxAnnotationVersion = "1.0"
     const val javaxInjectVersion = "1"
 
-    const val kotlinVersion = "1.3.61"
-    const val gradleAndroid = "3.6.0"
+    const val kotlinVersion = "1.6.21"
+    const val gradleAndroid = "7.1.3"
 
     const val junit = "4.12"
     const val androidxEspresso = "3.1.0"

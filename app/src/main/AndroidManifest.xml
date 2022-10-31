@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.anangkur.wallpaper.feature.MainActivity">
+        <activity
+            android:name="com.anangkur.wallpaper.feature.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
