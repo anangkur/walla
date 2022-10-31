@@ -23,7 +23,6 @@ subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             android {
-                buildToolsVersion Config.buildTools
                 compileSdkVersion Config.compileSdk
 
                 defaultConfig {
