@@ -3,7 +3,7 @@ package com.anangkur.wallpaper.features.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.features.home.databinding.ItemSuggestionBinding
 import com.anangkur.wallpaper.utils.setImageUrl
 

@@ -1,6 +1,6 @@
 package com.anangkur.wallpaper.data.repository
 
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 
 interface LocalRepository {
     suspend fun searchWallpaper(query: String): List<Wallpaper>

@@ -1,19 +1,20 @@
 package com.anangkur.wallpaper.features.collection
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.wallpaper.BuildConfig
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.features.collection.databinding.ActivityCollectionBinding
+import com.anangkur.wallpaper.features.collection.di.ViewModelFactory
 import com.anangkur.wallpaper.presentation.ARGS_ID
 import com.anangkur.wallpaper.presentation.ARGS_TITLE
-import com.anangkur.wallpaper.presentation.features.collection.CollectionViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.utils.obtainViewModel
+import com.anangkur.wallpaper.utils.provideRepository
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
 
@@ -65,7 +66,7 @@ class CollectionsActivity : AppCompatActivity() {
         }
         binding.recyclerCollection.apply {
             adapter = collectionAdapter
-            layoutManager = LinearLayoutManager(this@CollectionsActivity, LinearLayout.VERTICAL, false)
+            layoutManager = LinearLayoutManager(this@CollectionsActivity, RecyclerView.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
         }
     }
@@ -77,7 +78,10 @@ class CollectionsActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        collectionViewModel = obtainViewModel(CollectionViewModel::class.java)
+        collectionViewModel = obtainViewModel(
+            CollectionViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observerViewModel() {

@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.features.preview.databinding.ActivityPreviewBinding
+import com.anangkur.wallpaper.features.preview.di.ViewModelFactory
 import com.anangkur.wallpaper.presentation.*
-import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
 import com.anangkur.wallpaper.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -52,7 +52,10 @@ class PreviewActivity: AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        previewViewModel = obtainViewModel(PreviewViewModel::class.java)
+        previewViewModel = obtainViewModel(
+            PreviewViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observeViewModel() {

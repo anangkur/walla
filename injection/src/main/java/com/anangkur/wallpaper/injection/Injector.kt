@@ -1,7 +1,7 @@
 package com.anangkur.wallpaper.injection
 
 import android.content.Context
-import com.anangkur.wallpaper.data.Repository
+import com.anangkur.wallpaper.domain.repository.Repository
 import com.anangkur.wallpaper.local.LocalRepository
 import com.anangkur.wallpaper.remote.RemoteRepository
 import com.anangkur.wallpaper.remote.services.UnsplashService
@@ -10,17 +10,19 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.anangkur.wallpaper.data.Repository.Companion as RepositoryImpl
 
-object Injector {
+class Injector(
+    private val context: Context,
+    private val baseUrl: String,
+) {
 
-    fun provideViewModelFactory(context: Context, baseUrl: String) = ViewModelFactory.getInstance(
-        provideRepository(context, baseUrl)
-    )
-
-    private fun provideRepository(context: Context, baseUrl: String) = Repository.getInstance(
-        localRepository = provideLocalRepository(context),
-        remoteRepository = provideRemoteRepository(provideUnsplashService(baseUrl))
-    )
+    val repository: Repository by lazy {
+        RepositoryImpl.getInstance(
+            localRepository = provideLocalRepository(context),
+            remoteRepository = provideRemoteRepository(provideUnsplashService(baseUrl))
+        )
+    }
 
     private fun provideLocalRepository(context: Context) = LocalRepository.getInstance(context)
 

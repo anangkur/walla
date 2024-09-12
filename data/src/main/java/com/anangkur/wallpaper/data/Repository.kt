@@ -1,13 +1,14 @@
 package com.anangkur.wallpaper.data
 
-import com.anangkur.wallpaper.data.model.Collection
-import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.data.repository.LocalRepository
 import com.anangkur.wallpaper.data.repository.RemoteRepository
+import com.anangkur.wallpaper.domain.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Collection as ModelCollection
+import com.anangkur.wallpaper.domain.repository.Repository as RepositoryContract
 
 class Repository (
     private val factory: RepositoryFactory
-) {
+) : RepositoryContract {
 
     companion object{
         private var INSTANCE: Repository? = null
@@ -19,47 +20,47 @@ class Repository (
         )
     }
 
-    suspend fun retrieveSavedWallpaper(): List<Wallpaper> {
+    override suspend fun retrieveSavedWallpaper(): List<Wallpaper> {
         return factory.retrieveCacheDataStore().retrieveSavedWallpapers()
     }
 
-    suspend fun retrieveWallpapers(): List<Wallpaper> {
+    override suspend fun retrieveWallpapers(): List<Wallpaper> {
         return factory.retrieveCacheDataStore().retrieveWallpapers()
     }
 
-    suspend fun insertWallpaper(wallpaper: Wallpaper, isReplace: Boolean) {
+    override suspend fun insertWallpaper(wallpaper: Wallpaper, isReplace: Boolean) {
         factory.retrieveCacheDataStore().insertWallpaper(wallpaper, isReplace)
     }
 
-    suspend fun deleteWallpaper(id: String) {
+    override suspend fun deleteWallpaper(id: String) {
         factory.retrieveCacheDataStore().deleteWallpaper(id)
     }
 
-    suspend fun fetchWallpapers(clientId: String): List<Wallpaper> {
+    override suspend fun fetchWallpapers(clientId: String): List<Wallpaper> {
         return factory.retrieveRemoteDataStore().fetchWallpaper(clientId)
     }
 
-    suspend fun fetchCollection(clientId: String): List<Collection> {
+    override suspend fun fetchCollection(clientId: String): List<ModelCollection> {
         return factory.retrieveRemoteDataStore().fetchCollection(clientId)
     }
 
-    suspend fun searchWallpaper(query: String): List<Wallpaper> {
+    override suspend fun searchWallpaper(query: String): List<Wallpaper> {
         return factory.retrieveCacheDataStore().searchWallpaper(query)
     }
 
-    suspend fun fetchCollections(clientId: String, page: Int, perPage: Int): List<Collection> {
+    override suspend fun fetchCollections(clientId: String, page: Int, perPage: Int): List<ModelCollection> {
         return factory.retrieveRemoteDataStore().fetchCollections(clientId, page, perPage)
     }
 
-    suspend fun fetchCollectionPhotos(clientId: String, collectionId: String): List<Wallpaper> {
+    override suspend fun fetchCollectionPhotos(clientId: String, collectionId: String): List<Wallpaper> {
         return factory.retrieveRemoteDataStore().fetchCollectionPhotos(clientId, collectionId)
     }
 
-    suspend fun fetchSearchByQuery(clientId: String, query: String): List<Wallpaper> {
+    override suspend fun fetchSearchByQuery(clientId: String, query: String): List<Wallpaper> {
         return factory.retrieveRemoteDataStore().fetchSearchPhotosByQuery(clientId, query)
     }
 
-    suspend fun fetchSearchByColor(clientId: String, color: String): List<Wallpaper> {
+    override suspend fun fetchSearchByColor(clientId: String, color: String): List<Wallpaper> {
         return factory.retrieveRemoteDataStore().fetchSearchPhotosByColor(clientId, color)
     }
 

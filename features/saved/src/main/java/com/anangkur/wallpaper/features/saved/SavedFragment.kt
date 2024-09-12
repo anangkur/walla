@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anangkur.wallpaper.data.model.Wallpaper
+import androidx.recyclerview.widget.RecyclerView
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.features.saved.databinding.FragmentSavedBinding
-import com.anangkur.wallpaper.presentation.features.saved.SavedViewModel
+import com.anangkur.wallpaper.features.saved.di.ViewModelFactory
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.utils.obtainViewModel
+import com.anangkur.wallpaper.utils.provideRepository
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
 
@@ -46,7 +48,10 @@ class SavedFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        savedViewModel = obtainViewModel(SavedViewModel::class.java)
+        savedViewModel = obtainViewModel(
+            SavedViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observeViewModel() {
@@ -77,7 +82,7 @@ class SavedFragment : Fragment() {
         binding.recyclerSaved.apply {
             adapter = savedAdapter
             itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
     }
 

@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.feature.MainActivity
 import com.anangkur.wallpaper.features.preview.databinding.DialogPreviewBinding
 import com.anangkur.wallpaper.presentation.*
-import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel
-import com.anangkur.wallpaper.presentation.features.preview.PreviewViewModel.Companion.Action
+import com.anangkur.wallpaper.features.preview.PreviewViewModel.Companion.Action
+import com.anangkur.wallpaper.features.preview.di.ViewModelFactory
 import com.anangkur.wallpaper.R as APP_R
 import com.anangkur.wallpaper.features.preview.R as PREVIEW_R
 import com.anangkur.wallpaper.utils.*
@@ -74,7 +74,10 @@ class PreviewDialog : DialogFragment() {
     }
 
     private fun setupViewModel() {
-        previewViewModel = obtainViewModel(PreviewViewModel::class.java)
+        previewViewModel = obtainViewModel(
+            PreviewViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observeViewModel() {

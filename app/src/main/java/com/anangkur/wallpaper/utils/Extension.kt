@@ -11,11 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,9 +29,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.anangkur.wallpaper.BuildConfig
 import com.anangkur.wallpaper.R
-import com.anangkur.wallpaper.injection.Injector
+import com.anangkur.wallpaper.WallaApplication
+import com.anangkur.wallpaper.domain.repository.Repository
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -37,11 +43,25 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.regex.Pattern
 
-fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, Injector.provideViewModelFactory(this, BuildConfig.UNSPLASH_ENDPOINT)).get(viewModelClass)
+fun AppCompatActivity.provideRepository(): Repository {
+    return (application as WallaApplication).injector.repository
+}
 
-fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProviders.of(this, Injector.provideViewModelFactory(requireContext(), BuildConfig.UNSPLASH_ENDPOINT)).get(viewModelClass)
+fun Fragment.provideRepository(): Repository {
+    return (activity?.application as WallaApplication).injector.repository
+}
+
+fun <T : ViewModel> AppCompatActivity.obtainViewModel(
+    viewModelClass: Class<T>,
+    viewModelFactory: NewInstanceFactory,
+) =
+    ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
+
+fun <T : ViewModel> Fragment.obtainViewModel(
+    viewModelClass: Class<T>,
+    viewModelFactory: NewInstanceFactory,
+) =
+    ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
 
 fun Activity.showSnackbarLong(message: String){
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()
