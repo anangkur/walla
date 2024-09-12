@@ -3,4 +3,5 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation Deps.toolsKotlinJdk8
+    api project(":domain")
 }

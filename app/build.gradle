@@ -38,11 +38,13 @@ android {
 }
 
 dependencies {
-    api(project(':presentation'))
-    api(project(':injection'))
+    api project(':navigator')
+    api project(':injection')
+    api project(":domain")
     api Deps.googleMaterial
     api Deps.androidxConstraintLayout
     api Deps.toolsKotlinJdk8
+    api Deps.androidxViewModel
     kapt Deps.glideCompiler
     implementation Deps.glide
     implementation Deps.materialLoadingButton

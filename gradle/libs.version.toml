@@ -1,0 +1,5 @@
+[versions]
+modulegraph = "0.10.0"
+
+[plugins]
+modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }

@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android{
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation(project(':data'))
+    implementation(project(':driver:localdb'))
+    implementation(project(':driver:config'))
+    implementation Deps.androidxRoom
+}

@@ -2,22 +2,23 @@ package com.anangkur.wallpaper.features.search
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.wallpaper.R as APP_R
 import com.anangkur.wallpaper.feature.search.R as SEARCH_R
-import com.anangkur.wallpaper.data.model.Wallpaper
 import com.anangkur.wallpaper.feature.search.databinding.ActivitySearchResultBinding
 import com.anangkur.wallpaper.presentation.ARGS_COLOR
-import com.anangkur.wallpaper.presentation.features.search.SearchResultViewModel
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.utils.obtainViewModel
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.BuildConfig
+import com.anangkur.wallpaper.domain.model.Wallpaper
+import com.anangkur.wallpaper.features.search.di.ViewModelFactory
+import com.anangkur.wallpaper.utils.provideRepository
 
 class SearchResultActivity : AppCompatActivity() {
 
@@ -92,7 +93,7 @@ class SearchResultActivity : AppCompatActivity() {
         binding.recyclerResult.apply {
             adapter = searchResultAdapter
             itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(this@SearchResultActivity, LinearLayout.VERTICAL, false)
+            layoutManager = LinearLayoutManager(this@SearchResultActivity, RecyclerView.VERTICAL, false)
         }
     }
 
@@ -120,7 +121,10 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        searchResultViewModel = obtainViewModel(SearchResultViewModel::class.java)
+        searchResultViewModel = obtainViewModel(
+            SearchResultViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observeViewModel() {

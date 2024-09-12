@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".WallaApplication">
 
         <activity
             android:name="com.anangkur.wallpaper.feature.MainActivity"

@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 dependencies {
-    implementation(project(':presentation'))
     implementation(project(':data'))
-    implementation(project(':local'))
-    implementation(project(':remote'))
+    implementation(project(':domain'))
+    implementation(project(':data:local'))
+    implementation(project(':data:remote'))
     api Deps.androidxLifeCycleExtension
     implementation Deps.toolsKotlinJdk8
 }

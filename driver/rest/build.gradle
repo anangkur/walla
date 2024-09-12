@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    api Deps.retrofitConverterGson
+    api Deps.retrofit
+    api Deps.okhttp
+    api Deps.okhttpLoggingInterceptor
+}

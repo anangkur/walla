@@ -1,7 +1,6 @@
 package com.anangkur.wallpaper.features.home
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.wallpaper.BuildConfig
-import com.anangkur.wallpaper.data.model.Collection
-import com.anangkur.wallpaper.data.model.Wallpaper
+import com.anangkur.wallpaper.domain.model.Wallpaper
 import com.anangkur.wallpaper.features.home.adapter.FavCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.OtherCollectionAdapter
 import com.anangkur.wallpaper.features.home.adapter.SuggestionAdapter
 import com.anangkur.wallpaper.features.home.databinding.FragmentHomeBinding
-import com.anangkur.wallpaper.presentation.features.home.HomeViewModel
+import com.anangkur.wallpaper.features.home.di.ViewModelFactory
 import com.anangkur.wallpaper.presentation.getPreviewDialog
 import com.anangkur.wallpaper.presentation.startCollectionsActivity
 import com.anangkur.wallpaper.utils.obtainViewModel
+import com.anangkur.wallpaper.utils.provideRepository
 import com.anangkur.wallpaper.utils.showSnackbarShort
 import com.anangkur.wallpaper.R as APP_R
+import com.anangkur.wallpaper.domain.model.Collection as ModelCollection
 
 class HomeFragment : Fragment() {
 
@@ -57,7 +57,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        homeViewModel = obtainViewModel(HomeViewModel::class.java)
+        homeViewModel = obtainViewModel(
+            HomeViewModel::class.java,
+            ViewModelFactory.getInstance(provideRepository()),
+        )
     }
 
     private fun observeViewModel() {
@@ -177,7 +180,7 @@ class HomeFragment : Fragment() {
         binding.btnRefreshFav.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY) }
     }
 
-    private fun setSuccessCollections(collections: List<Collection>) {
+    private fun setSuccessCollections(collections: List<ModelCollection>) {
         binding.flipperFavorite.displayedChild = 0
         favCollectionAdapter.setItems(collections)
     }
@@ -200,7 +203,7 @@ class HomeFragment : Fragment() {
         binding.btnRefreshOther.setOnClickListener { homeViewModel.fetchCollections(BuildConfig.UNSPLASH_ACCESS_KEY, 2, 10) }
     }
 
-    private fun setSuccessOtherCollections(otherCollections: List<Collection>) {
+    private fun setSuccessOtherCollections(otherCollections: List<ModelCollection>) {
         binding.flipperOtherSuggestions.displayedChild = 0
         otherCollectionAdapter.setItems(otherCollections)
     }
