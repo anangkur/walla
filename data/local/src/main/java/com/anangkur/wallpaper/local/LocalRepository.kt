@@ -1,23 +1,23 @@
 package com.anangkur.wallpaper.local
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.anangkur.wallpaper.config.SharedPreferencesConfig
 import com.anangkur.wallpaper.data.repository.LocalRepository
 import com.anangkur.wallpaper.domain.model.Wallpaper
-import com.anangkur.wallpaper.local.db.AppDatabase
-import com.anangkur.wallpaper.local.model.toDatabaseEntity
-import com.anangkur.wallpaper.local.model.toWallpaper
+import com.anangkur.wallpaper.local.mapper.toDatabaseEntity
+import com.anangkur.wallpaper.local.mapper.toWallpaper
+import com.anangkur.wallpaper.localdb.db.AppDatabase
 
 class LocalRepository(
-    private val preferences: SharedPreferences,
-    private val appDatabase: AppDatabase
+    private val preferences: SharedPreferencesConfig,
+    private val appDatabase: AppDatabase,
 ): LocalRepository {
 
     companion object{
         private var INSTANCE: LocalRepository? = null
         fun getInstance(context: Context) = INSTANCE ?: LocalRepository(
-            context.getSharedPreferences(Const.PREF_NAME, Context.MODE_PRIVATE),
-            AppDatabase.getDatabase(context)
+            SharedPreferencesConfig.getInstance(context),
+            AppDatabase.getDatabase(context),
         )
     }
 
@@ -53,6 +53,6 @@ class LocalRepository(
     }
 
     private fun getLastCacheUpdateTimeMillis(): Long {
-        return preferences.getLong(Const.PREF_CACHED_TIME, 0)
+        return preferences.loadCacheTime()
     }
 }

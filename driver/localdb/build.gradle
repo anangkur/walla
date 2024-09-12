@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android{
     kotlinOptions {
@@ -8,8 +9,6 @@ android{
 }
 
 dependencies {
-    implementation(project(':data'))
-    implementation(project(':driver:localdb'))
-    implementation(project(':driver:config'))
     implementation Deps.androidxRoom
+    kapt Deps.androidxRoomCompiler
 }

@@ -9,28 +9,25 @@
 
 graph LR
   subgraph :data
-    :data:local["local"]
     :data:remote["remote"]
+    :data:local["local"]
+  end
+  subgraph :driver
+    :driver:rest["rest"]
+    :driver:localdb["localdb"]
+    :driver:config["config"]
   end
   subgraph :features
-    :features:preview["preview"]
-    :features:saved["saved"]
     :features:home["home"]
     :features:search["search"]
+    :features:saved["saved"]
+    :features:preview["preview"]
     :features:collection["collection"]
   end
-  :features:preview --> :app
-  :data:local --> :data
-  :features:saved --> :app
-  :data --> :domain
   :data:remote --> :data
+  :data:remote --> :driver:rest
   :features:home --> :app
-  :injection --> :data
-  :injection --> :domain
-  :injection --> :data:local
-  :injection --> :data:remote
   :features:search --> :app
-  :features:collection --> :app
   :app --> :navigator
   :app --> :injection
   :app --> :domain
@@ -39,6 +36,17 @@ graph LR
   :app --> :features:saved
   :app --> :features:preview
   :app --> :features:collection
+  :features:preview --> :app
+  :data:local --> :data
+  :data:local --> :driver:localdb
+  :data:local --> :driver:config
+  :features:saved --> :app
+  :data --> :domain
+  :injection --> :data
+  :injection --> :domain
+  :injection --> :data:local
+  :injection --> :data:remote
+  :features:collection --> :app
 ```
 ## Built With
 * [Kotlin](https://kotlinlang.org/)

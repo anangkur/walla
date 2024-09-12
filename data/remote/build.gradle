@@ -4,10 +4,7 @@ apply plugin: 'kotlin'
 dependencies {
 
     implementation(project(':data'))
+    implementation(project(':driver:rest'))
 
     implementation Deps.toolsKotlinJdk8
-    api Deps.retrofitConverterGson
-    api Deps.retrofit
-    api Deps.okhttp
-    api Deps.okhttpLoggingInterceptor
 }

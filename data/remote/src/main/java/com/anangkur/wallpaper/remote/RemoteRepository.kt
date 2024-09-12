@@ -2,16 +2,19 @@ package com.anangkur.wallpaper.remote
 
 import com.anangkur.wallpaper.data.repository.RemoteRepository
 import com.anangkur.wallpaper.domain.model.Wallpaper
-import com.anangkur.wallpaper.remote.model.unsplash.toCollection
-import com.anangkur.wallpaper.remote.model.unsplash.toWallpaper
-import com.anangkur.wallpaper.remote.services.UnsplashService
+import com.anangkur.wallpaper.remote.mapper.toCollection
+import com.anangkur.wallpaper.remote.mapper.toWallpaper
+import com.anangkur.wallpaper.rest.di.provideRetrofitBuilder
+import com.anangkur.wallpaper.rest.service.UnsplashService
 import com.anangkur.wallpaper.domain.model.Collection as ModelCollection
 
 class RemoteRepository(private val unsplashService: UnsplashService): RemoteRepository {
 
     companion object{
         private var INSTANCE: RemoteRepository? = null
-        fun getInstance(unsplashService: UnsplashService) = INSTANCE ?: RemoteRepository(unsplashService)
+        fun getInstance(baseUrl: String) = INSTANCE ?: RemoteRepository(
+            provideRetrofitBuilder(baseUrl).create(UnsplashService::class.java)
+        )
     }
 
     override suspend fun fetchWallpaper(clientId: String): List<Wallpaper> {
